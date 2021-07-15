@@ -2,6 +2,8 @@
 
 In this project im trying to create my own social network
 
+With [DanyGersh](https://github.com/DanyGersh)
+
 ## technologies used
 
 `php 7.4`
