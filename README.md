@@ -7,4 +7,4 @@ In this project im trying to create my own social network
 `php 7.4`
 `mysql 5.7`
 `composer 2`
-`symfomy 5.1`
+`symfony 5.1`
