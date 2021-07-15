@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    <form method="post">
+        <label for="username">Username: </label>
+        <input id="username" name="username" type="text" required>
+        <label for="name">Name: </label>
+        <input id="name" name="name" type="text">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+        <button type="submit">Register</button>
+        <input type="checkbox" name="agree" id="agree" required>
+        <label for="agree">I agree with the conditions</label>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+    </form>
+{% endblock %}
+
+
