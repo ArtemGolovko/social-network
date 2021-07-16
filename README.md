@@ -1,6 +1,6 @@
 # social-network
 
-In this project im trying to create my own social network
+In this project, i'm making a social network with [DanyGersh](https://github.com/DanyGersh)
 
 ## technologies used
 
