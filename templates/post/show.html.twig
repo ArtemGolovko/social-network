@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div>
+        <p>{{ post.author.username }}</p>
+        <small>{{ post.publishedAt|date('Y M d H:i') }}</small>
+    </div>
+    <p>{{ post.body }}</p>
+    <p>Likes: {{ post.likes }}</p>
+{% endblock %}
+

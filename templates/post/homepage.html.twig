@@ -1,5 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    Homepage
+    <table style="width: 100%;">
+        <thead>
+            <td>Author</td>
+            <td>PublishedAt</td>
+            <td>Likes</td>
+            <td>Body</td>
+            <td>Link</td>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+            <tr>
+                <td>{{ post.author.username }}</td>
+                <td>{{ post.publishedAt|date('Y M d H:i') }}</td>
+                <td>{{ post.likes }}</td>
+                <td>{{ post.body|u.truncate(30, '...') }}</td>
+                <td><a href="{{ post_url(post) }}">
+                        {{ post_url(post) }}
+                </a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
