@@ -1,28 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Вход - Митер{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+{% endblock %}
 
 {% block body %}
-{% if error %}
-    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-{% endif %}
-<form method="post">
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputUsername">Username</label>
-    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    <form method="post">
+        <div class="imgcontainer">
+            <img src="{{ asset('img/logo.png') }}" alt="Miter" class="logo">
+        </div>
 
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        <div class="container">
+            <label for="uname"><span class="loginText">Никнейм</span></label>
+            <div class="inputField">
+                <i class="fas fa-user"></i><input type="text" value="{{ last_username }}" placeholder="Введите никнейм" name="username" required>
+            </div>
 
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" name="_remember_me"> Remember me
-        </label>
-    </div>
+            <label for="psw"><span class="loginText">Пароль</span></label>
+            <div class="inputField">
+                <i class="fas fa-key"></i><input type="password" placeholder="Введите пароль" name="password" required>
+            </div>
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+            <button type="submit">Войти</button>
+            <label>
+                <div class="rememberMe"><input type="checkbox" checked="checked" name="_remember_me"> <span>Запомнить меня</span></div>
+            </label>
+            <a href="{{ path('app_register') }}">Нет аккаунта? Зарегистрироваться</a>
+        </div>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+    </form>
 {% endblock %}

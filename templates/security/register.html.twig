@@ -1,23 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Регистрация - Митер{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="css/login.css"
+{% endblock %}
 
 {% block body %}
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-    <form method="post">
-        <label for="username">Username: </label>
-        <input id="username" name="username" type="text" required>
-        <label for="name">Name: </label>
-        <input id="name" name="name" type="text">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required>
-        <button type="submit">Register</button>
-        <input type="checkbox" name="agree" id="agree" required>
-        <label for="agree">I agree with the conditions</label>
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-    </form>
+{% if error %}
+    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+<form method="post">
+    <div class="imgcontainer">
+        <img src="{{ asset('img/logo.png') }}" alt="Miter" class="logo">
+    </div>
+
+    <div class="container">
+        <label for="name"><span class="loginText">Имя</span></label>
+        <div class="inputField">
+            <i class="fas fa-user"></i><input type="text" placeholder="Введите имя" name="name" required>
+        </div>
+
+        <label for="name"><span class="loginText">Имя пользователя (никнейм)</span></label>
+        <div class="inputField">
+            <i class="fas fa-at"></i><input type="text" placeholder="Введите никнейм" name="username" required>
+        </div>
+
+        <label for="psw"><span class="loginText">Email</span></label>
+        <div class="inputField">
+            <i class="fas fa-envelope"></i><input type="email" placeholder="Введите электронною почту" name="email" required>
+        </div>
+
+        <label for="psw"><span class="loginText">Пароль</span></label>
+        <div class="inputField">
+            <i class="fas fa-key"></i><input type="password" placeholder="Введите пароль" name="password" required>
+        </div>
+
+        <button type="submit">Зарегистрироваться</button>
+        <label>
+            <div class="rememberMe"><input type="checkbox" checked="checked" name="_remember_me"> <span>Запомнить меня</span></div>
+        </label>
+        <a href="{{ path('app_login') }}">Уже зарегистрированы? Войти</a>
+    </div>
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+</form>
 {% endblock %}
 
 

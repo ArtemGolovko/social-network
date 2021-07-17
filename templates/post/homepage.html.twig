@@ -1,26 +1,41 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_content.html.twig' %}
 
-{% block body %}
-    <table style="width: 100%;">
-        <thead>
-            <td>Author</td>
-            <td>PublishedAt</td>
-            <td>Likes</td>
-            <td>Body</td>
-            <td>Link</td>
-        </thead>
-        <tbody>
-            {% for post in posts %}
-            <tr>
-                <td>{{ post.author.username }}</td>
-                <td>{{ post.publishedAt|date('Y M d H:i') }}</td>
-                <td>{{ post.likes }}</td>
-                <td>{{ post.body|u.truncate(30, '...') }}</td>
-                <td><a href="{{ post_url(post) }}">
-                        {{ post_url(post) }}
-                </a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+{% block content %}
+    <div class="makePostBlock">
+        <div class="mkpLeft">
+            <div class="postIcon" style="background-image: url({{ asset('img/user.png') }}); background-size: cover;"></div>
+            <input placeholder="Что нового?" type="text">
+        </div>
+        <button class="publishButtonPost">Опубликовать</button>
+    </div>
+    {% for post in posts %}
+    <div class="postBlock">
+        <div class="postHeader">
+            <a href="profile.html">
+                <div class="postUser">
+                    <div class="postIcon" style="background-image: url({{ asset('img/user.png') }}); background-size: cover;"></div>
+                    <div class="postUserInfo">
+                        <div class="postUsername">{{ post.author.username }} <i class="fas fa-check-circle verifyIcon"></i></div>
+                        <div class="postTime">{{ post.publishedAt|date('Y m D H:i') }}</div>
+                    </div>
+                </div>
+            </a>
+            <div class="postMore">
+                <i class="fas fa-ellipsis-h moreicon"></i>
+                <div class="postMoreMenu">
+                    <button><i class="fas fa-star"></i> В Избранное</button>
+                    <button><i class="fas fa-exclamation-triangle"></i> Пожаловатся</button>
+                </div>
+            </div>
+        </div>
+        <div class="postContent">
+            <p>{{ post.body }}</p>
+        </div>
+        <div class="postFooter">
+            <div class="postLike"><button class="btn_like"><i class="fas fa-heart animate__animated"></i></button> <span>{{ post.likes }}</span></div>
+            <div class="postComment"><button class="btn_comment"><i class="fas fa-comment"></i></button> <span>0</span></div>
+            <div class="postShare"><button class="btn_share"><i class="fas fa-share"></i></button> <span>0</span></div>
+        </div>
+    </div>
+    {% endfor %}
 {% endblock %}

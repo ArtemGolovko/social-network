@@ -1,0 +1,468 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500;600;700;800&display=swap');
+body{
+    margin: 0;
+    background-color: rgb(248, 248, 248);
+    font-family: Arial, Helvetica, sans-serif;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: white;
+    align-items: center;
+    z-index: 5;
+    box-shadow: #00000014 0px 3px 3px;
+}
+.headerIcon{
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+    overflow: hidden;
+    margin-left: 10px;
+}
+.logo{
+    image-rendering: optimizeQuality;
+}
+
+.userIcon{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+}
+.notificationIcon{
+    background: none;
+    border: none;
+    font-size: 23px;
+    cursor: pointer;
+    color: grey;
+}
+.notificationIcon .round{
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: 13px;
+    margin-left: 15px;
+}
+.header_left{
+    display: flex;
+    justify-content: space-between;
+    width: 370px;
+    align-items: center;
+}
+
+.searchBox{
+    background-color: rgb(235, 235, 235);
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    color: grey;
+}
+.mainSearch{
+    border: none;
+    background: none;
+    height: 100%;
+    outline: none;
+}
+
+.userPanel{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: fixed;
+    width: 17%;
+    padding: 20px;
+}
+.userPanel div:hover{
+    background-color: rgb(226, 226, 226);
+}
+.userPanel div a{
+    color: grey;
+    width: 100%;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    transition: all .2s ease;
+    font-size: 14px;
+    height: 100%;
+    margin-top: 20px;
+    font-weight: 500;
+}
+.userPanel div i{
+    font-size: 20px;
+    width: 30px;
+    margin-right: 10px;
+    transition: all .3 ease;
+    color: grey;
+}
+.userPanel div{
+    height: 40px;
+    font-size: 18px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    cursor: pointer;
+    padding-left: 10px;
+    transition: all .2s ease;
+    width: 200px;
+}
+
+.mainContent{
+    margin-left: 20%;
+    width: 100%;
+}
+
+.content{
+    display: flex;
+    margin-top: 55px;
+    justify-content: space-between;
+}
+
+.postHeader{
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    justify-content: space-between;
+}
+.postHeader a{
+    color: black;
+    text-decoration: none;
+}
+.postHeader .moreicon{
+    color: rgb(212, 212, 212);
+    cursor: pointer;
+    transition: all .2s ease;
+}
+.postHeader .moreicon:hover{
+    color: rgb(0, 0, 0);
+}
+.postHeader .postMoreMenu.active{
+    width: 137px;
+    opacity: 1;
+    margin-left: -120px;
+    height: 90px;
+}
+
+.postMoreMenu{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: white;
+    border: 2px rgb(237, 237, 237) solid;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-left: 0px;
+    width: 0;
+    opacity: 0;
+    transition: all .3s ease;
+    height: 0;
+}
+.postMoreMenu button{
+    background: none;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    white-space: nowrap;
+}
+.postMoreMenu button:hover{
+    background-color: rgb(248, 248, 248);
+}
+.postMoreMenu button i{
+    width: 15px;
+    margin-right: 10px;
+}
+
+.postIcon{
+    background-color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    overflow: hidden;
+}
+
+.postBlock{
+    background-color: white;
+    border-radius: 5px;
+    margin: 30px;
+    padding: 20px;
+    box-shadow: #00000014 0px 3px 3px;
+}
+
+.postFooter{
+    display: flex;
+}
+
+.postFooter div{
+    margin-right: 30px;
+}
+.postFooter button{
+    background: none;
+    border: none;
+    color: grey;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.postUsername{
+    font-size: 17px;
+    font-family: 'Montserrat', sans-serif;
+}
+.verifyIcon{
+    color: rgb(155, 155, 155);
+    font-size: 13px;
+}
+.postTime{
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+    color: gray;
+}
+.postContent{
+    margin: 20px 0;
+}
+.postContent p{
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+.postUser{
+    display: flex;
+    cursor: pointer;
+}
+.fa-heart.active{
+    color: rgb(255, 91, 118);
+    font-size: 18px;
+    transform: scale(2);
+}
+.btn_like{
+    transition: all .3s ease;
+}
+.btn_like.active{
+    transform: scale(1.2);
+}
+.fa-heart{
+    transition: all .3s ease;
+    transform: scale(1);
+}
+.container{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.container_header{
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.makePostBlock{
+    display: flex;
+    justify-content: space-between;
+    margin: 30px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: #00000014 0px 3px 3px;
+}
+.makePostBlock input{
+    width: 90%;
+    border: none;
+    background: none;
+    outline: none;
+}
+.mkpLeft{
+    display: flex;
+    width: 100%;
+}
+.publishButtonPost{
+    border-radius: 5px;
+    border: none;
+    padding: 0 20px;
+    background-color: rgb(255, 136, 0);
+    color: white;
+    cursor: pointer;
+}
+
+.header_inner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.notificationList{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    top: 70px;
+    left: 330px;
+    z-index: 3;
+    background-color: white;
+    border: 2px rgb(237, 237, 237) solid;
+    border-radius: 5px;
+    max-width: 400px;
+    width: 400px;
+    height: 0px;
+    overflow: auto;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all .3s ease;
+}
+
+.notification{
+    padding: 17px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    height: 60px;
+}
+.notification:hover{
+    background-color: rgb(248, 248, 248);
+}
+
+.notificationUser{
+    display: flex;
+}
+
+.notificationList.active{
+    top: 70px;
+    height: 300px;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.profileHeader{
+    width: 100%;
+}
+.profileBgImage{
+    height: 200px;
+}
+.profileIcon{
+    background-color: white;
+    border-radius: 50%;
+    width: 110px;
+    height: 110px;
+    margin-left: 20px;
+    overflow: hidden;
+    position: absolute;
+    margin-top: -55px;
+    border: 3px white solid;
+}
+
+.profileInfo{
+    margin-top: 5px;
+    padding: 0px 20px 20px 20px;
+}
+.profileBlock{
+    background-color: white;
+    border-radius: 5px;
+    margin: 30px;
+    box-shadow: #00000014 0px 3px 3px;
+    overflow: hidden;
+}
+.profileUsername{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}
+.profileNickname{
+    margin: 3px 0 10px 0;
+    font-size: 14px;
+    color: gray;
+}
+.profileDesc{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+}
+
+.profileButtons{
+    text-align: right;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+.profileButtons .message{
+    background: none;
+    color: gray;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.profileHeader .subscribeProfile{
+    background-color: rgb(255, 136, 0);
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    color: white;
+    transition: all .2s ease;
+    width: max-content;
+    white-space: nowrap;
+    text-align: left;
+    font-family: 'Montserrat', sans-serif;
+    width: 120px;
+}
+.subscribeProfile.active{
+    background-color: gray;
+    width: 144px;
+}
+
+.profileStats{
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 10px;
+    font-weight: 500;
+    font-size: 14px;
+}
+.profileStats .stat::after{
+    content: "|";
+    margin: 0 10px;
+    opacity: .2;
+}
+
+.profileMenuHeader{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: white;
+    border: 2px rgb(237, 237, 237) solid;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-left: -50px;
+    margin-top: 25px;
+    transition: all .3s ease;
+    transform: translateY(-20px);
+    white-space: nowrap;
+    height: 0;
+    opacity: 0;
+}
+.profileMenuHeader button{
+    background: none;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    white-space: nowrap;
+}
+.profileMenuHeader button:hover{
+    background-color: rgb(248, 248, 248);
+}
+.profileMenuHeader button i{
+    width: 15px;
+    margin-right: 10px;
+}
+
+.profileMenuHeader.active{
+    opacity: 1;
+    height: 94px;
+    transform: translateY(0px);
+}

@@ -14,7 +14,7 @@ class PostFixtures extends BaseFixtures implements DependentFixtureInterface
         $this->createMany(Post::class, 100, function (Post $post) {
              $post
                  ->setBody($this->faker->paragraphs(3, true))
-                 ->setLikes($this->faker->numberBetween(-10, 10))
+                 ->setLikes($this->faker->numberBetween(0, 10))
                  ->setAuthor($this->getRandomReference(User::class))
              ;
 
