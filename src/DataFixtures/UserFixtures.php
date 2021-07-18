@@ -24,6 +24,7 @@ class UserFixtures extends BaseFixtures
         $this->createMany(User::class, 10, function (User $user) {
              $user
                  ->setUsername($this->faker->userName)
+                 ->setEmail($this->faker->email)
                  ->setName($this->faker->name)
                  ->setPassword($this->passwordEncoder->encodePassword($user, 'qwerty'))
              ;

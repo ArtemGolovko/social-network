@@ -23,26 +23,12 @@ class PostRepository extends ServiceEntityRepository
 
     public function findLatestPublished()
     {
-        return $this->latest($this->published())
+        return $this->createQueryBuilder('p')
             ->leftJoin('p.author', 'a')
             ->addSelect('a')
+            ->orderBy('p.createdAt', 'DESC')
             ->getQuery()
             ->getResult()
         ;
-    }
-
-    private function published(?QueryBuilder $qb = null): QueryBuilder
-    {
-        return $this->getOrCreateQueryBuilder($qb)->andWhere('p.publishedAt IS NOT NULL');
-    }
-
-    private function latest(?QueryBuilder $qb = null): QueryBuilder
-    {
-        return $this->getOrCreateQueryBuilder($qb)->orderBy('p.publishedAt', 'DESC');
-    }
-
-    private function getOrCreateQueryBuilder(?QueryBuilder $qb = null): QueryBuilder
-    {
-        return $qb ?? $this->createQueryBuilder('p');
     }
 }

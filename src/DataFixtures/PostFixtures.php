@@ -17,10 +17,6 @@ class PostFixtures extends BaseFixtures implements DependentFixtureInterface
                  ->setLikes($this->faker->numberBetween(0, 10))
                  ->setAuthor($this->getRandomReference(User::class))
              ;
-
-             if ($this->faker->boolean(70)) {
-                 $post->setPublishedAt($this->faker->dateTimeBetween('-60 days', '-1 day'));
-             }
         });
     }
 

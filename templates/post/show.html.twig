@@ -3,7 +3,7 @@
 {% block content %}
     <div>
         <p>{{ post.author.username }}</p>
-        <small>{{ post.publishedAt|date('Y M d H:i') }}</small>
+        <small>{{ post.createdAt|date('Y M d H:i') }}</small>
     </div>
     <p>{{ post.body }}</p>
     <p>Likes: {{ post.likes }}</p>

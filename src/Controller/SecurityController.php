@@ -39,11 +39,12 @@ class SecurityController extends AbstractController
         UserPasswordEncoderInterface $passwordEncoder,
         GuardAuthenticatorHandler $guard,
         LoginFromAuthenticator $authenticator
-    ) {
+    ): Response {
         if ($request->isMethod(Request::METHOD_POST)) {
             $user = new User();
             $user
                 ->setUsername($request->request->get('username'))
+                ->setEmail($request->request->get('email'))
                 ->setName($request->request->get('name'))
                 ->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
 

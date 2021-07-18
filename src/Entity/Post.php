@@ -40,11 +40,6 @@ class Post
      */
     private $likes = 0;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $publishedAt;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -81,18 +76,6 @@ class Post
     public function setLikes(int $likes): self
     {
         $this->likes = $likes;
-
-        return $this;
-    }
-
-    public function getPublishedAt(): ?\DateTimeInterface
-    {
-        return $this->publishedAt;
-    }
-
-    public function setPublishedAt(?\DateTimeInterface $publishedAt): self
-    {
-        $this->publishedAt = $publishedAt;
 
         return $this;
     }

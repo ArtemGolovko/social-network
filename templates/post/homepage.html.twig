@@ -16,7 +16,7 @@
                     <div class="postIcon" style="background-image: url({{ asset('img/user.png') }}); background-size: cover;"></div>
                     <div class="postUserInfo">
                         <div class="postUsername">{{ post.author.username }} <i class="fas fa-check-circle verifyIcon"></i></div>
-                        <div class="postTime">{{ post.publishedAt|date('Y m D H:i') }}</div>
+                        <div class="postTime">{{ post.createdAt|date('Y m D H:i') }}</div>
                     </div>
                 </div>
             </a>
