@@ -1,19 +1,32 @@
 {% extends 'base_content.html.twig' %}
 
 {% block content %}
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-    <div class="makePostBlock">
-        <div class="mkpLeft">
-            <div class="postIcon" style="background-image: url({{ asset('img/user.png') }}); background-size: cover;"></div>
-            <input placeholder="Что нового?" type="text">
+<div class="profileBlock">
+    <div class="profileHeader">
+        <div class="profileBgImage" style="background: url({{ asset('img/profileBg.png') }}); background-size: cover;"></div>
+        <div class="profileIcon" style="background-image: url({{ asset('img/user.png') }}); background-size: cover;"></div>
+        <div class="profileButtons">
+            <button class="message"><i class="fas fa-comments"></i></button>
+            <button class="subscribeProfile"><span id="subscribeLabel">ПОДПИСАТСЯ</span></button>
         </div>
-        <button class="publishButtonPost">Опубликовать</button>
     </div>
-    {% endif %}
-    {% for post in posts %}
+    <div class="profileInfo">
+        <div class="profileBio">
+            <div class="profileUsername">{{ app.user.name }} <i class="fas fa-check-circle verifyIcon"></i></div>
+            <div class="profileNickname">@{{ app.user.username }}</div>
+        </div>
+        <div class="profileDesc">profileDesc</div>
+        <div class="profileStats">
+            <span class="stat">0 подписчиков</span>
+            <span class="stat">{{ app.user.posts|length }} постов</span>
+            <span class="stat">0 подписок</span>
+        </div>
+    </div>
+</div>
+{% for post in app.user.posts %}
     <div class="postBlock">
         <div class="postHeader">
-            <a href="{{ path('app_user_profile', {'username': post.author.username}) }}">
+            <a href="profile.html">
                 <div class="postUser">
                     <div class="postIcon" style="background-image: url({{ asset('img/user.png') }}); background-size: cover;"></div>
                     <div class="postUserInfo">
@@ -39,5 +52,5 @@
             <div class="postShare"><button onclick="window.location.href = '{{ post_url(post) }}';" class="btn_share"><i class="fas fa-share"></i></button> <span>0</span></div>
         </div>
     </div>
-    {% endfor %}
+{% endfor %}
 {% endblock %}

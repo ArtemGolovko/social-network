@@ -16,6 +16,7 @@ class PostFixtures extends BaseFixtures implements DependentFixtureInterface
                  ->setBody($this->faker->paragraphs(3, true))
                  ->setLikes($this->faker->numberBetween(0, 10))
                  ->setAuthor($this->getRandomReference(User::class))
+                 ->setCreatedAt($this->faker->dateTimeBetween('-500 day', '-1 day'))
              ;
         });
     }

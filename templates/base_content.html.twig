@@ -22,7 +22,7 @@
         <div class="header_inner">
             <div class="header_left">
                 <div class="logo">
-                    <a href="index.html"><img src="{{ asset('img/logo_header.png') }}" alt=""></a>
+                    <a href="{{ path('app_homepage') }}"><img src="{{ asset('img/logo_header.png') }}" alt=""></a>
                 </div>
                 <div class="searchBox">
                     <i class="fas fa-search"></i>
@@ -43,6 +43,7 @@
                 </div>
             </div>
             <div class="header_right">
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 <div class="userIcon">
                     <span>username <i class="fas fa-check-circle verifyIcon"></i></span>
                     <div class="headerIcon" style="background-image: url({{ asset('img/user.png') }}); background-size: cover;"></div>
@@ -51,6 +52,10 @@
                     <button><i class="fas fa-user"></i> Мой аккаунт</button>
                     <button onclick="exit()" id="exitButton"><i class="fas fa-sign-out-alt"></i> Выйти из аккаунта</button>
                 </div>
+                {% else %}
+                    <a href="{{ path('app_login') }}">Вход</a>
+                    <a href="{{ path('app_register') }}">Регистрация</a>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -58,7 +63,7 @@
 <div class="container">
     <div class="content">
         <div class="userPanel">
-            <div class="upLabel"><i class="fas fa-home" style="color: rgb(255, 136, 0);"></i><a href="#" style="color: rgb(255, 136, 0); font-weight: 700;">Главная</a></div>
+            <div class="upLabel"><i class="fas fa-home" style="color: rgb(255, 136, 0);"></i><a href="{{ path('app_homepage') }}" style="color: rgb(255, 136, 0); font-weight: 700;">Главная</a></div>
             <div class="upLabel"><i class="fas fa-search"></i><a href="#">Поиск</a></div>
             <div class="upLabel"><i class="fas fa-comments"></i><a href="#">Сообщения</a></div>
             <div class="upLabel"><i class="fas fa-star"></i><a href="#">Избранное</a></div>
