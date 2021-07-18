@@ -24,33 +24,6 @@
     </div>
 </div>
 {% for post in user.posts %}
-    <div class="postBlock">
-        <div class="postHeader">
-            <a href="profile.html">
-                <div class="postUser">
-                    <div class="postIcon" style="background-image: url({{ asset('img/user.png') }}); background-size: cover;"></div>
-                    <div class="postUserInfo">
-                        <div class="postUsername">{{ post.author.username }} <i class="fas fa-check-circle verifyIcon"></i></div>
-                        <div class="postTime">{{ post.createdAt|date('Y m D H:i') }}</div>
-                    </div>
-                </div>
-            </a>
-            <div class="postMore">
-                <i class="fas fa-ellipsis-h moreicon"></i>
-                <div class="postMoreMenu">
-                    <button><i class="fas fa-star"></i> В Избранное</button>
-                    <button><i class="fas fa-exclamation-triangle"></i> Пожаловатся</button>
-                </div>
-            </div>
-        </div>
-        <div class="postContent">
-            <p>{{ post.body }}</p>
-        </div>
-        <div class="postFooter">
-            <div class="postLike"><button class="btn_like"><i class="fas fa-heart animate__animated"></i></button> <span>{{ post.likes }}</span></div>
-            <div class="postComment"><button class="btn_comment"><i class="fas fa-comment"></i></button> <span>0</span></div>
-            <div class="postShare"><button onclick="window.location.href = '{{ post_url(post) }}';" class="btn_share"><i class="fas fa-share"></i></button> <span>0</span></div>
-        </div>
-    </div>
+    {% include 'partial/render_post.html.twig' with {'post': post} %}
 {% endfor %}
 {% endblock %}
