@@ -4,9 +4,23 @@ $(document).ready(function(){
     });
 
     $('.btn_like').click(function(event){
-        $(this).children('.fa-heart').toggleClass("active");
-        $(this).toggleClass("active");
-        $(this).children('.fa-heart').toggleClass("animate__bounceIn animate__flip animate__bounce");
+        let $this = $(this);
+
+        $.ajax({
+            url: $(this).data(`${$(this).data('action')}Url`),
+            type: 'POST',
+            dataType: 'json',
+        }).done(function(data) {
+            console.log('data');
+            $this.parent().children('#likesCount').text(data.likesCount);
+            $this.data('action', ($(this).data('action') === 'like') ? 'dislike' : 'like');
+
+            $this.children('.fa-heart').toggleClass("active");
+            $this.toggleClass("active");
+            $this.children('.fa-heart').toggleClass("animate__bounceIn animate__flip animate__bounce");
+        }).fail(function (data) {
+            window.location.href = data.responseJSON.redirectUrl;
+        });
     });
 
     $('.notificationIcon').click(function(event){

@@ -26,6 +26,8 @@ class PostRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->leftJoin('p.author', 'a')
             ->addSelect('a')
+            ->leftJoin('p.likes', 'l')
+            ->addSelect('l')
             ->orderBy('p.createdAt', 'DESC')
             ->getQuery()
             ->getResult()

@@ -6,6 +6,6 @@
         <small>{{ post.createdAt|date('Y M d H:i') }}</small>
     </div>
     <p>{{ post.body }}</p>
-    <p>Likes: {{ post.likes }}</p>
+    <p>Likes: {{ post.likes|length }}</p>
 {% endblock %}
 

@@ -52,9 +52,15 @@ class User implements UserInterface
      */
     private $email;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Post::class, mappedBy="likes")
+     */
+    private $postsLiked;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->postsLiked = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -183,6 +189,33 @@ class User implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getPostsLiked(): Collection
+    {
+        return $this->postsLiked;
+    }
+
+    public function addPostsLiked(Post $postsLiked): self
+    {
+        if (!$this->postsLiked->contains($postsLiked)) {
+            $this->postsLiked[] = $postsLiked;
+            $postsLiked->addLike($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostsLiked(Post $postsLiked): self
+    {
+        if ($this->postsLiked->removeElement($postsLiked)) {
+            $postsLiked->removeLike($this);
+        }
 
         return $this;
     }

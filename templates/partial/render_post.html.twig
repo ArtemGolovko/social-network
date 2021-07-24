@@ -21,7 +21,15 @@
         <p>{{ post.body }}</p>
     </div>
     <div class="postFooter">
-        <div class="postLike"><button class="btn_like"><i class="fas fa-heart animate__animated"></i></button> <span>{{ post.likes }}</span></div>
+        <div class="postLike">
+            <button
+                    class="btn_like {% if app.user in post.likes %}active{% endif %}"
+                    data-like-url="{{ path('app_post_like', { 'id': post.id }) }}"
+                    data-dislike-url="{{ path('app_post_dislike', { 'id': post.id }) }}"
+                    data-action="{% if app.user in post.likes %}dislike{% else %}like{% endif %}"
+            ><i class="fas fa-heart animate__animated{% if app.user in post.likes %} active animate__bounceIn animate__flip animate__bounce{% endif %}"></i>
+            </button> <span id="likesCount">{{ post.likes|length }}</span>
+        </div>
         <div class="postComment"><button class="btn_comment"><i class="fas fa-comment"></i></button> <span>0</span></div>
         <div class="postShare"><button onclick="window.location.href = '{{ post_url(post) }}';" class="btn_share"><i class="fas fa-share"></i></button> <span>0</span></div>
     </div>
