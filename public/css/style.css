@@ -34,6 +34,7 @@ header{
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
     font-size: 13px;
+    flex-shrink: 0;
 }
 .notificationIcon{
     background: none;
@@ -189,6 +190,7 @@ header{
     height: 50px;
     margin-right: 10px;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 .postBlock{
@@ -354,6 +356,7 @@ header{
     position: absolute;
     margin-top: -55px;
     border: 3px white solid;
+    flex-shrink: 0;
 }
 
 .profileInfo{
@@ -465,4 +468,132 @@ header{
     opacity: 1;
     height: 94px;
     transform: translateY(0px);
+}
+
+
+.postComments{
+    margin-top: 0px;
+    height: 0;
+    overflow: hidden;
+}
+.postCommentUserIcon{
+    background-color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+.postCommentUserIconReply{
+    background-color: white;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+.postComment{
+    padding: 15px 10px;
+}
+
+.postCommentReply{
+    padding: 10px 30px;
+}
+
+.postCommentContent{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+.postCommentContent p{
+    margin: 5px 0;
+}
+.postCommentUser{
+    display: flex;
+    cursor: pointer;
+}
+
+.postCommentUsername{
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+    color: #904a00;
+    white-space: nowrap;
+}
+.postCommentTime{
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+    color: gray;
+}
+
+.makeCommentBlock{
+    border-top: 1px rgb(209, 209, 209) solid;
+    display: flex;
+    padding: 20px 10px 10px 10px;
+    justify-content: flex-start;
+}
+.mkcRight{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.makeCommentBlock input{
+    background: none;
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+.publishButtonComment{
+    border-radius: 5px;
+    border: none;
+    padding: 0 10px;
+    background-color: rgb(255, 136, 0);
+    color: white;
+    cursor: pointer;
+}
+.postComments.active{
+    margin-top: 20px;
+    height: max-content;
+    overflow: visible;
+}
+.postMoreCemmentsBtn{
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    color: #904a00;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+}
+.postMoreReply{
+    background: none;
+    border: none;
+    padding: 0 20px;
+    cursor: pointer;
+    color: grey;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+.postCommentReplyButton{
+    background: none;
+    color: gray;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.makeReplyBlock{
+    display: flex;
+    padding: 10px 0px 10px 30px;
+    justify-content: flex-start;
+}
+.mkrRight{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.makeReplyBlock input{
+    background: none;
+    width: 100%;
+    border: none;
+    outline: none;
 }

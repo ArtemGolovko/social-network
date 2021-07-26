@@ -29,7 +29,9 @@ $(document).ready(function(){
     $('.userIcon').click(function(event){
         $('.profileMenuHeader').toggleClass("active");
     });
-
+    $('.btn_comment').click(function(event){
+        $('.postComments').toggleClass("active");
+    });
     $('.subscribeProfile').click(function(event){
         $('.subscribeProfile').toggleClass("active");
         var change = document.getElementById("subscribeLabel");

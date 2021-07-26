@@ -30,7 +30,9 @@
             ><i class="fas fa-heart animate__animated{% if app.user in post.likes %} active animate__bounceIn animate__flip animate__bounce{% endif %}"></i>
             </button> <span id="likesCount">{{ post.likes|length }}</span>
         </div>
-        <div class="postComment"><button class="btn_comment"><i class="fas fa-comment"></i></button> <span>0</span></div>
+        <div class="postCommentIcon"><button class="btn_comment"><i class="fas fa-comment"></i></button> <span>0</span></div>
         <div class="postShare"><button onclick="window.location.href = '{{ post_url(post) }}';" class="btn_share"><i class="fas fa-share"></i></button> <span>0</span></div>
+    </div>
+    <div class="postComments">
     </div>
 </div>
