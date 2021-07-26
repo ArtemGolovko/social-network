@@ -9,7 +9,7 @@ $(document).ready(function(){
         $.ajax({
             url: $(this).data(`${$(this).data('action')}Url`),
             type: 'POST',
-            dataType: 'json',
+            dataType: 'json'
         }).done(function(data) {
             console.log('data');
             $this.parent().children('#likesCount').text(data.likesCount);
@@ -30,7 +30,27 @@ $(document).ready(function(){
         $('.profileMenuHeader').toggleClass("active");
     });
     $('.btn_comment').click(function(event){
-        $('.postComments').toggleClass("active");
+        let postComments = $(this).parents().eq(2).children('.postComments');
+        let $this = $(this);
+
+        if ($(this).data('loaded') === false) {
+            $.ajax({
+                url: $(this).data('comments-url'),
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
+                data: JSON.stringify({
+                    startIndex: 0,
+                    maxResult: 2
+                })
+            }).done(function (data) {
+                for (let comment of data.comments) {
+                    postComments.children('#pasteComments').before(createComment(comment));
+                }
+                $this.data('loaded', true);
+            });
+        }
+        postComments.toggleClass("active");
     });
     $('.subscribeProfile').click(function(event){
         $('.subscribeProfile').toggleClass("active");
@@ -44,3 +64,21 @@ $(document).ready(function(){
             }
     });
  });
+
+
+function createComment(comment)
+{
+    return `<div class="postComment">
+            <div class="postCommentUser">
+                <div class="postCommentUserIcon" style="background-image: url(${comment.author.avatar}); background-size: cover;"></div>
+                <div class="postUserInfo">
+                    <div class="postCommentUsername">${comment.author.username} <i class="fas fa-check-circle verifyIcon"></i></div>
+                    <div class="postCommentTime">${comment.createdAt}</div>
+                </div>
+            </div>
+            <div class="postCommentContent">
+                <p>${comment.body}</p>
+            </div>
+            <button class="postCommentReplyButton">Ответить</button>
+        </div>`;
+}

@@ -28,6 +28,8 @@ class PostRepository extends ServiceEntityRepository
             ->addSelect('a')
             ->leftJoin('p.likes', 'l')
             ->addSelect('l')
+            ->leftJoin('p.comments', 'c')
+            ->addSelect('c')
             ->orderBy('p.createdAt', 'DESC')
             ->getQuery()
             ->getResult()

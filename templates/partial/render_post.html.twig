@@ -30,9 +30,43 @@
             ><i class="fas fa-heart animate__animated{% if app.user in post.likes %} active animate__bounceIn animate__flip animate__bounce{% endif %}"></i>
             </button> <span id="likesCount">{{ post.likes|length }}</span>
         </div>
-        <div class="postCommentIcon"><button class="btn_comment"><i class="fas fa-comment"></i></button> <span>0</span></div>
+        <div class="postCommentIcon">
+            <button
+                    class="btn_comment"
+                    data-comments-url="{{ path('app_post_comments', { 'id': post.id }) }}"
+                    data-loaded="false"
+            ><i class="fas fa-comment"></i>
+            </button> <span>{{ post.comments|length }}</span>
+        </div>
         <div class="postShare"><button onclick="window.location.href = '{{ post_url(post) }}';" class="btn_share"><i class="fas fa-share"></i></button> <span>0</span></div>
     </div>
     <div class="postComments">
+        {#
+        {% for comment in post.comments %}
+        <div class="postComment">
+            <div class="postCommentUser">
+                <div class="postCommentUserIcon" style="background-image: url({{ asset('img/user.png') }}); background-size: cover;"></div>
+                <div class="postUserInfo">
+                    <div class="postCommentUsername">{{ comment.author.username }} <i class="fas fa-check-circle verifyIcon"></i></div>
+                    <div class="postCommentTime">{{ comment.createdAt|ago }}</div>
+                </div>
+            </div>
+            <div class="postCommentContent">
+                <p>{{ comment.body }}</p>
+            </div>
+            <button class="postCommentReplyButton">Ответить</button>
+        </div>
+        {% else %}
+            Нет комментариев
+        {% endfor %}
+        #}
+        <div style="display: none;" id="pasteComments"></div>
+        <div class="makeCommentBlock">
+            <div class="postCommentUserIcon" style="background-image: url({{ asset('img/user.png') }}); background-size: cover;"></div>
+            <div class="mkcRight">
+                <input placeholder="Напишите свой комментарий..." type="text">
+                <button class="publishButtonComment">Опубликовать</button>
+            </div>
+        </div>
     </div>
 </div>

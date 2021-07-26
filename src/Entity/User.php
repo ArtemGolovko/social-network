@@ -219,4 +219,9 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getAvatarUrl(): string
+    {
+        return 'img/user.png';
+    }
 }

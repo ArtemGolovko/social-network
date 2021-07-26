@@ -38,13 +38,15 @@ abstract class BaseFixtures extends Fixture
         return $entity;
     }
 
-    protected function createMany(string $className, int $count, callable $factory)
+    protected function createMany(string $className, int $count, callable $factory, bool $addReference = true)
     {
         for ($i = 0; $i < $count; ++$i)
         {
             $entity = $this->create($className, $factory);
 
-            $this->addReference($className . '|' . $i, $entity);
+            if ($addReference) {
+                $this->addReference($className . '|' . $i, $entity);
+            }
         }
     }
 
