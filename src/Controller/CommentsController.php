@@ -34,7 +34,9 @@ class CommentsController extends AbstractController
 
         $comments = $this->commentRepository->findLatestByPostWithPagination($post, $data['maxResult'], $data['startIndex']);
 
-        $responseData = [];
+        $responseData = [
+            'comments' => [],
+        ];
 
         foreach ($comments as $comment) {
             $responseData['comments'][] = [
