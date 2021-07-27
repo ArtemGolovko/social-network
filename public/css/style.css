@@ -1,4 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500;600;700;800&display=swap');
+#transition_disabled
+{
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+}
 body{
     margin: 0;
     background-color: rgb(248, 248, 248);
@@ -16,6 +23,15 @@ header{
     z-index: 5;
     box-shadow: #00000014 0px 3px 3px;
 }
+.loginBtnHeader{
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #ff6400;
+    font-size: 14px;
+    padding: 10px 20px;
+}
 .headerIcon{
     border-radius: 50%;
     width: 35px;
@@ -23,6 +39,7 @@ header{
     margin-right: 10px;
     overflow: hidden;
     margin-left: 10px;
+    background-position: center;
 }
 .logo{
     image-rendering: optimizeQuality;
@@ -65,6 +82,7 @@ header{
     border-radius: 10px;
     padding: 10px;
     color: grey;
+    flex-shrink: 0;
 }
 .mainSearch{
     border: none;
@@ -145,25 +163,26 @@ header{
     color: rgb(0, 0, 0);
 }
 .postHeader .postMoreMenu.active{
-    width: 137px;
+    visibility: visible;
     opacity: 1;
-    margin-left: -120px;
-    height: 90px;
+    transform: translateY(0);
+    transition-delay: 0s;
 }
 
 .postMoreMenu{
     display: flex;
+    margin-left: -120px;
+    margin-top: 10px;
     flex-direction: column;
     position: absolute;
     background-color: white;
     border: 2px rgb(237, 237, 237) solid;
     border-radius: 5px;
     overflow: hidden;
-    margin-left: 0px;
-    width: 0;
     opacity: 0;
-    transition: all .3s ease;
-    height: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: transform 0.3s, opacity 0.3s, visibility 0s ease 0.3s;
 }
 .postMoreMenu button{
     background: none;
@@ -191,6 +210,7 @@ header{
     margin-right: 10px;
     overflow: hidden;
     flex-shrink: 0;
+    background-position: center;
 }
 
 .postBlock{
@@ -246,7 +266,7 @@ header{
     transform: scale(2);
 }
 .btn_like{
-    transition: all .3s ease;
+    transition: transform 0.3s, font-size 0.3s, color 0.3s ease;
 }
 .btn_like.active{
     transform: scale(1.2);
@@ -287,9 +307,31 @@ header{
     border-radius: 5px;
     border: none;
     padding: 0 20px;
-    background-color: rgb(255, 136, 0);
+    background-color: #ff6400;
     color: white;
     cursor: pointer;
+    visibility: hidden;
+    opacity: 0;
+    transition: all .2s;
+}
+.postIconMkp{
+    background-color: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: all .2s;
+    background-position: center;
+}
+.postIconMkp.active{
+    width: 50px;
+    height: 50px;
+}
+.publishButtonPost.active{
+    visibility: visible;
+    opacity: 1;
 }
 
 .header_inner{
@@ -311,11 +353,12 @@ header{
     border-radius: 5px;
     max-width: 400px;
     width: 400px;
-    height: 0px;
+    height: 400px;
     overflow: auto;
     opacity: 0;
+    visibility: hidden;
     transform: translateY(-20px);
-    transition: all .3s ease;
+    transition: transform 0.3s, opacity 0.3s, visibility 0s ease 0.3s;
 }
 
 .notification{
@@ -334,10 +377,10 @@ header{
 }
 
 .notificationList.active{
-    top: 70px;
-    height: 300px;
+    visibility: visible;
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0px);
+    transition-delay: 0s;
 }
 
 .profileHeader{
@@ -357,10 +400,11 @@ header{
     margin-top: -55px;
     border: 3px white solid;
     flex-shrink: 0;
+    background-position: center;
 }
 
 .profileInfo{
-    margin-top: 5px;
+    margin-top: 15px;
     padding: 0px 20px 20px 20px;
 }
 .profileBlock{
@@ -400,22 +444,24 @@ header{
 }
 
 .profileHeader .subscribeProfile{
-    background-color: rgb(255, 136, 0);
-    border: none;
+    background-color: #ff6400;
     border-radius: 5px;
     padding: 10px;
     cursor: pointer;
     color: white;
-    transition: all .2s ease;
+    transition: all .3s ease;
     width: max-content;
     white-space: nowrap;
     text-align: left;
     font-family: 'Montserrat', sans-serif;
     width: 120px;
+    border: 1px solid white;
 }
 .subscribeProfile.active{
-    background-color: gray;
-    width: 144px;
+    background-color: white;
+    color: black;
+    width: 104px;
+    border: 1px solid gray;
 }
 
 .profileStats{
@@ -440,13 +486,14 @@ header{
     overflow: hidden;
     margin-left: -50px;
     margin-top: 25px;
-    transition: all .3s ease;
-    transform: translateY(-20px);
     white-space: nowrap;
-    height: 0;
+    height: max-content;
     opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: transform 0.3s, opacity 0.3s, visibility 0s ease 0.3s;
 }
-.profileMenuHeader button{
+.profileMenuHeader a{
     background: none;
     border: none;
     padding: 15px;
@@ -455,19 +502,23 @@ header{
     justify-content: flex-start;
     align-items: center;
     white-space: nowrap;
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
 }
-.profileMenuHeader button:hover{
+.profileMenuHeader a:hover{
     background-color: rgb(248, 248, 248);
 }
-.profileMenuHeader button i{
+.profileMenuHeader a i{
     width: 15px;
     margin-right: 10px;
 }
 
 .profileMenuHeader.active{
+    visibility: visible;
     opacity: 1;
-    height: 94px;
     transform: translateY(0px);
+    transition-delay: 0s;
 }
 
 
@@ -596,4 +647,17 @@ header{
     width: 100%;
     border: none;
     outline: none;
+}
+
+.editProfileBtn{
+    background-color: #ff6400;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    color: white;
+    width: max-content;
+    white-space: nowrap;
+    text-align: left;
+    font-family: 'Montserrat', sans-serif;
 }

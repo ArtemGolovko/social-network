@@ -9,12 +9,14 @@
     {{ parent() }}
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="{{ asset('js/script.js') }}"></script>
-    <script>function exit()
-        {
-            var url = document.getElementById('exitButton');
-            document.location.href = "{{ path('app_logout') }}";
-        }</script>
+    <script>
+        $("window").load(function() {
+            $("body").removeAttr("id");
+        });
+    </script>
 {% endblock %}
+
+{% block body_attrs %}id="transition_disabled"{% endblock %}
 
 {% block body %}
 <header>
@@ -49,12 +51,12 @@
                     <div class="headerIcon" style="background-image: url({{ asset('img/user.png') }}); background-size: cover;"></div>
                 </div>
                 <div class="profileMenuHeader">
-                    <button><i class="fas fa-user"></i> Мой аккаунт</button>
-                    <button onclick="exit()" id="exitButton"><i class="fas fa-sign-out-alt"></i> Выйти из аккаунта</button>
+                    <a href="{{ path('app_current_user_profile') }}"><i class="fas fa-user"></i> Мой профиль</a>
+                    <a href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> Выйти из аккаунта</a>
                 </div>
                 {% else %}
-                    <a href="{{ path('app_login') }}">Вход</a>
-                    <a href="{{ path('app_register') }}">Регистрация</a>
+                    <a href="{{ path('app_login') }}"><button class="loginBtnHeader">Войти</button></a>
+{#                    <a href="{{ path('app_register') }}"><button class="loginBtnHeader">Войти</button></a>#}
                 {% endif %}
             </div>
         </div>
@@ -63,7 +65,7 @@
 <div class="container">
     <div class="content">
         <div class="userPanel">
-            <div class="upLabel"><i class="fas fa-home" style="color: rgb(255, 136, 0);"></i><a href="{{ path('app_homepage') }}" style="color: rgb(255, 136, 0); font-weight: 700;">Главная</a></div>
+            <div class="upLabel" id="homepage"><i class="fas fa-home"></i><a href="{{ path('app_homepage') }}">Главная</a></div>
             <div class="upLabel"><i class="fas fa-search"></i><a href="#">Поиск</a></div>
             <div class="upLabel"><i class="fas fa-comments"></i><a href="#">Сообщения</a></div>
             <div class="upLabel"><i class="fas fa-star"></i><a href="#">Избранное</a></div>

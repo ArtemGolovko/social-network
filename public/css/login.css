@@ -1,12 +1,12 @@
-html{
-    background-image: url(../img/profileBg.png);
-    background-size: cover;
-    background-repeat: no-repeat;
-    margin: 0;
-    height: 100%;
-    backdrop-filter: blur(10px);
-    background-position: center;
-}
+/*html{*/
+/*    background-image: url(../img/profileBg.png);*/
+/*    background-size: cover;*/
+/*    background-repeat: no-repeat;*/
+/*    margin: 0;*/
+/*    height: 100%;*/
+/*    backdrop-filter: blur(10px);*/
+/*    background-position: center;*/
+/*}*/
 body{
     margin: 0;
     width: 100%;

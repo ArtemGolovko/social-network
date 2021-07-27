@@ -1,4 +1,10 @@
 $(document).ready(function(){
+    let homepageLabel = $('#homepage');
+    if (homepageLabel.children('a').attr('href') === window.location.pathname) {
+        homepageLabel.children('i').attr('style', 'color: rgb(255, 136, 0);');
+        homepageLabel.children('a').attr('style','color: rgb(255, 136, 0); font-weight: 700;');
+    }
+
     $('.postMore').click(function(event){
         $(this).children('.postMoreMenu').toggleClass("active");
     });
@@ -52,18 +58,23 @@ $(document).ready(function(){
         }
         postComments.toggleClass("active");
     });
+    $('.mkpInput').click(function(event){
+        $('.publishButtonPost').toggleClass("active");
+        $('.postIconMkp').toggleClass("active");
+    });
+
     $('.subscribeProfile').click(function(event){
         $('.subscribeProfile').toggleClass("active");
         var change = document.getElementById("subscribeLabel");
-            if (change.innerHTML == "ВЫ ПОДПИСАНЫ")
-            {
-                change.innerHTML = "ПОДПИСАТСЯ";
-            }
-            else {
-                change.innerHTML = "ВЫ ПОДПИСАНЫ";
-            }
+        if (change.innerHTML == "ПОДПИСКИ")
+        {
+            change.innerHTML = "ПОДПИСАТСЯ";
+        }
+        else {
+            change.innerHTML = "ПОДПИСКИ";
+        }
     });
- });
+});
 
 
 function createComment(comment)

@@ -3,11 +3,10 @@
 {% block content %}
 <div class="profileBlock">
     <div class="profileHeader">
-        <div class="profileBgImage" style="background: url({{ asset('img/profileBg.png') }}); background-size: cover;"></div>
+        <div class="profileBgImage" style="background: #ff6400; background-size: cover;"></div>
         <div class="profileIcon" style="background-image: url({{ asset('img/user.png') }}); background-size: cover;"></div>
         <div class="profileButtons">
-            <button class="message"><i class="fas fa-comments"></i></button>
-            <button class="subscribeProfile"><span id="subscribeLabel">ПОДПИСАТСЯ</span></button>
+            <button class="editProfileBtn"><span id="subscribeLabel"><i class="fas fa-pen"></i> РЕДАКТИРОВАТЬ</span></button>
         </div>
     </div>
     <div class="profileInfo">
@@ -23,6 +22,7 @@
         </div>
     </div>
 </div>
+{{ include('partial/make_post_block.html.twig') }}
 {% for post in app.user.posts %}
     {% include 'partial/render_post.html.twig' with {'post': post} %}
 {% endfor %}

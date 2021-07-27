@@ -12,7 +12,7 @@
 {% endif %}
 <form method="post">
     <div class="imgcontainer">
-        <img src="{{ asset('img/logo.png') }}" alt="Miter" class="logo">
+        <img src="{{ asset('img/logo_header.png') }}" alt="Miter" class="logo">
     </div>
 
     <div class="container">
@@ -45,5 +45,3 @@
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 </form>
 {% endblock %}
-
-
