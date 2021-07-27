@@ -2,7 +2,7 @@
     <div class="postHeader">
         <a href="{{ path('app_user_profile', {'username': post.author.username}) }}">
             <div class="postUser">
-                <div class="postIcon" style="background-image: url({{ asset('img/user.png') }}); background-size: cover;"></div>
+                <div class="postIcon" style="background-image: url({{ asset(post.author.avatarUrl) }}); background-size: cover;"></div>
                 <div class="postUserInfo">
                     <div class="postUsername">{{ post.author.username }} <i class="fas fa-check-circle verifyIcon"></i></div>
                     <div class="postTime">{{ post.createdAt|ago }}</div>

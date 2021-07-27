@@ -10,7 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="{{ asset('js/script.js') }}"></script>
     <script>
-        $("window").load(function() {
+        $("window").on('load', function() {
             $("body").removeAttr("id");
         });
     </script>
@@ -47,8 +47,8 @@
             <div class="header_right">
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 <div class="userIcon">
-                    <span>username <i class="fas fa-check-circle verifyIcon"></i></span>
-                    <div class="headerIcon" style="background-image: url({{ asset('img/user.png') }}); background-size: cover;"></div>
+                    <span>{{ app.user.username }} <i class="fas fa-check-circle verifyIcon"></i></span>
+                    <div class="headerIcon" style="background-image: url({{ asset(app.user.avatarUrl) }}); background-size: cover;"></div>
                 </div>
                 <div class="profileMenuHeader">
                     <a href="{{ path('app_current_user_profile') }}"><i class="fas fa-user"></i> Мой профиль</a>
