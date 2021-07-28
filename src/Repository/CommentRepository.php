@@ -23,19 +23,33 @@ class CommentRepository extends ServiceEntityRepository
      /**
       * @return Comment[] Returns an array of Comment objects
       */
-    public function findLatestByPostWithPagination(Post $post, int $maxResult, int $startIndex = 0)
+    public function findLatestByPostWithPagination(Post $post, int $maxResult = null, int $startIndex = 0)
     {
-        return $this->createQueryBuilder('c')
+        $query = $this->createQueryBuilder('c')
             ->innerJoin('c.author', 'u')
             ->addSelect('u')
             ->andWhere('c.post = :post')
             ->setParameter('post', $post)
+            ->andWhere('c.answerTo IS NULL')
             ->orderBy('c.createdAt', 'DESC')
             ->getQuery()
             ->setFirstResult($startIndex)
-            ->setMaxResults($maxResult)
-            ->getResult()
         ;
+        if ($maxResult) {
+            $query->setMaxResults($maxResult);
+        }
+        return $query->getResult();
+    }
+
+    public function isMoreCommentsAvailable(Post $post, int $totalLoaded): bool
+    {
+        return $this->createQueryBuilder('c')
+            ->select('count(c)')
+            ->andWhere('c.post = :post')
+            ->setParameter('post', $post)
+            ->andWhere('c.answerTo IS NULL')
+            ->getQuery()
+            ->getSingleScalarResult() > $totalLoaded;
     }
 
     // /**

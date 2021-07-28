@@ -34,8 +34,11 @@ class CommentsController extends AbstractController
 
         $comments = $this->commentRepository->findLatestByPostWithPagination($post, $data['maxResult'], $data['startIndex']);
 
+        $isMoreAvailable = $this->commentRepository->isMoreCommentsAvailable($post, $data['startIndex'] + $data['maxResult']);
+
         $responseData = [
             'comments' => [],
+            'isMoreAvailable' => $isMoreAvailable
         ];
 
         foreach ($comments as $comment) {

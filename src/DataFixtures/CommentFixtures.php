@@ -12,7 +12,7 @@ class CommentFixtures extends BaseFixtures implements DependentFixtureInterface
 {
     public function loadData(ObjectManager $manager)
     {
-        $this->createMany(Comment::class, 100, function (Comment $comment) {
+        $this->createMany(Comment::class, 1000, function (Comment $comment) {
             $comment
                 ->setCreatedAt($this->faker->dateTimeBetween('-60 days', '-30 days'))
                 ->setAuthor($this->getRandomReference(User::class))
@@ -21,11 +21,15 @@ class CommentFixtures extends BaseFixtures implements DependentFixtureInterface
             ;
         });
 
-        $this->createMany(Comment::class, 100, function (Comment $comment) {
-            $comment
+        $this->createMany(Comment::class, 1000, function (Comment $answer) {
+            /** @var Comment $comment */
+            $comment = $this->getRandomReference(Comment::class);
+
+            $answer
                 ->setCreatedAt($this->faker->dateTimeBetween('-30 days', '-1 day'))
                 ->setAuthor($this->getRandomReference(User::class))
-                ->setAnswerTo($this->getRandomReference(Comment::class))
+                ->setAnswerTo($comment)
+                ->setPost($comment->getPost())
                 ->setBody($this->faker->paragraph)
             ;
         }, false);

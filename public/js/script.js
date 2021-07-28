@@ -39,9 +39,11 @@ $(document).ready(function(){
         let postComments = $(this).parents().eq(2).children('.postComments');
         let $this = $(this);
 
+        let url = $(this).data('comments-url');
+
         if ($(this).data('loaded') === false) {
             $.ajax({
-                url: $(this).data('comments-url'),
+                url: url,
                 type: 'POST',
                 dataType: 'json',
                 contentType: 'application/json;charset=utf-8',
@@ -53,11 +55,43 @@ $(document).ready(function(){
                 for (let comment of data.comments) {
                     postComments.children('#pasteComments').before(createComment(comment));
                 }
+                if (data.isMoreAvailable === true) {
+                    postComments.children('#pasteComments').before(createViewMoreButton(2, url));
+                }
                 $this.data('loaded', true);
             });
         }
         postComments.toggleClass("active");
     });
+    $(document).on('click', '.postMoreCemmentsBtn', function (event) {
+        let postComments = $(this).parents();
+        let $this = $(this);
+
+        let url = $(this).data('comments-url');
+        let totalLoaded = $(this).data('totalLoaded');
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify({
+                startIndex: totalLoaded,
+                maxResult: 2
+            })
+        }).done(function (data) {
+
+            $this.remove();
+
+            for (let comment of data.comments) {
+                postComments.children('#pasteComments').before(createComment(comment));
+            }
+            if (data.isMoreAvailable === true) {
+                postComments.children('#pasteComments').before(createViewMoreButton(totalLoaded + 2, url));
+            }
+        });
+    });
+
     $('.mkpInput').click(function(event){
         $('.publishButtonPost').toggleClass("active");
         $('.postIconMkp').toggleClass("active");
@@ -77,8 +111,7 @@ $(document).ready(function(){
 });
 
 
-function createComment(comment)
-{
+function createComment(comment) {
     return `<div class="postComment">
             <div class="postCommentUser">
                 <div class="postCommentUserIcon" style="background-image: url(${comment.author.avatar}); background-size: cover;"></div>
@@ -92,4 +125,12 @@ function createComment(comment)
             </div>
             <button class="postCommentReplyButton">Ответить</button>
         </div>`;
+}
+
+function createViewMoreButton(totalLoaded, commentsUrl) {
+    return `<button
+                class="postMoreCemmentsBtn"
+                data-total-loaded="${totalLoaded}"
+                data-comments-url="${commentsUrl}"
+            >Показать больше комментариев <i class="fas fa-chevron-down" aria-hidden="true"></i></button>`;
 }
