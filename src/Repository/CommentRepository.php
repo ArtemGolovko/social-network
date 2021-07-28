@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Comment;
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -25,7 +26,7 @@ class CommentRepository extends ServiceEntityRepository
       */
     public function findLatestByPostWithPagination(Post $post, int $maxResult, int $startIndex = 0)
     {
-        return $this->createQueryBuilder('c')
+        $query = $this->createQueryBuilder('c')
             ->leftJoin('c.answers', 'a')
             ->addSelect('a')
             ->innerJoin('c.author', 'u')
@@ -34,10 +35,11 @@ class CommentRepository extends ServiceEntityRepository
             ->setParameter('post', $post)
             ->andWhere('c.answerTo IS NULL')
             ->orderBy('c.createdAt', 'DESC')
-            ->getQuery()
             ->setFirstResult($startIndex)
             ->setMaxResults($maxResult)
-            ->getResult();
+        ;
+
+        return new Paginator($query);
     }
 
     public function isMoreCommentsAvailable(Post $post, int $totalLoaded): bool
@@ -56,7 +58,7 @@ class CommentRepository extends ServiceEntityRepository
      */
     public function findLatestAnswersWithPagination(Comment $comment, int $maxResult, int $startIndex = 0)
     {
-        return $this->createQueryBuilder('c')
+        $query = $this->createQueryBuilder('c')
             ->andWhere('c.answerTo = :comment')
             ->setParameter('comment', $comment)
             ->innerJoin('c.author', 'u')
@@ -64,11 +66,11 @@ class CommentRepository extends ServiceEntityRepository
             ->leftJoin('c.answers', 'a')
             ->addSelect('a')
             ->orderBy('c.createdAt', 'DESC')
-            ->getQuery()
             ->setFirstResult($startIndex)
             ->setMaxResults($maxResult)
-            ->getResult()
         ;
+
+        return new Paginator($query);
     }
 
     public function isMoreAnswersAvailable(Comment $comment, int $totalLoaded): bool

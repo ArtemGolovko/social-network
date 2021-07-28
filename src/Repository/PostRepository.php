@@ -6,6 +6,7 @@ use App\Entity\Post;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,7 +24,7 @@ class PostRepository extends ServiceEntityRepository
 
     public function findLatestPublished()
     {
-        return $this->createQueryBuilder('p')
+        $query = $this->createQueryBuilder('p')
             ->leftJoin('p.author', 'a')
             ->addSelect('a')
             ->leftJoin('p.likes', 'l')
@@ -31,8 +32,9 @@ class PostRepository extends ServiceEntityRepository
             ->leftJoin('p.comments', 'c')
             ->addSelect('c')
             ->orderBy('p.createdAt', 'DESC')
-            ->getQuery()
-            ->getResult()
+            ->setMaxResults(25)
         ;
+
+        return new Paginator($query);
     }
 }
