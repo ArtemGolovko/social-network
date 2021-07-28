@@ -1,11 +1,6 @@
 {% extends 'base_content.html.twig' %}
 
 {% block content %}
-    <div>
-        <p>{{ post.author.username }}</p>
-        <small>{{ post.createdAt|date('Y M d H:i') }}</small>
-    </div>
-    <p>{{ post.body }}</p>
-    <p>Likes: {{ post.likes|length }}</p>
+{% include 'partial/render_post.html.twig' with {post: post} %}
 {% endblock %}
 

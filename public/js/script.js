@@ -120,6 +120,17 @@ $(document).ready(function(){
         });
     });
 
+    $('.btn_share').click(function (event) {
+         let url = $(this).data('url');
+         $.ajax({
+             url: url,
+             type: 'POST',
+             dataType: 'json'
+         }).done(function (data) {
+             window.location.href = data.url;
+         });
+    });
+
     $('.mkpInput').click(function(event){
         $('.publishButtonPost').toggleClass("active");
         $('.postIconMkp').toggleClass("active");

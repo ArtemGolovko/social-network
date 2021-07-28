@@ -38,7 +38,7 @@
             ><i class="fas fa-comment"></i>
             </button> <span>{{ post.comments|length }}</span>
         </div>
-        <div class="postShare"><button onclick="window.location.href = '{{ post_url(post) }}';" class="btn_share"><i class="fas fa-share"></i></button> <span>0</span></div>
+        <div class="postShare"><button class="btn_share" data-url="{{ path('app_post_url', { 'id': post.id }) }}"><i class="fas fa-share"></i></button> <span>0</span></div>
     </div>
     <div class="postComments">
         {#
