@@ -23,9 +23,11 @@ class CommentRepository extends ServiceEntityRepository
      /**
       * @return Comment[] Returns an array of Comment objects
       */
-    public function findLatestByPostWithPagination(Post $post, int $maxResult = null, int $startIndex = 0)
+    public function findLatestByPostWithPagination(Post $post, int $maxResult, int $startIndex = 0)
     {
-        $query = $this->createQueryBuilder('c')
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.answers', 'a')
+            ->addSelect('a')
             ->innerJoin('c.author', 'u')
             ->addSelect('u')
             ->andWhere('c.post = :post')
@@ -34,11 +36,8 @@ class CommentRepository extends ServiceEntityRepository
             ->orderBy('c.createdAt', 'DESC')
             ->getQuery()
             ->setFirstResult($startIndex)
-        ;
-        if ($maxResult) {
-            $query->setMaxResults($maxResult);
-        }
-        return $query->getResult();
+            ->setMaxResults($maxResult)
+            ->getResult();
     }
 
     public function isMoreCommentsAvailable(Post $post, int $totalLoaded): bool
@@ -50,6 +49,36 @@ class CommentRepository extends ServiceEntityRepository
             ->andWhere('c.answerTo IS NULL')
             ->getQuery()
             ->getSingleScalarResult() > $totalLoaded;
+    }
+
+    /**
+     * @return Comment[] Returns an array of Comment objects
+     */
+    public function findLatestAnswersWithPagination(Comment $comment, int $maxResult, int $startIndex = 0)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.answerTo = :comment')
+            ->setParameter('comment', $comment)
+            ->innerJoin('c.author', 'u')
+            ->addSelect('u')
+            ->leftJoin('c.answers', 'a')
+            ->addSelect('a')
+            ->orderBy('c.createdAt', 'DESC')
+            ->getQuery()
+            ->setFirstResult($startIndex)
+            ->setMaxResults($maxResult)
+            ->getResult()
+        ;
+    }
+
+    public function isMoreAnswersAvailable(Comment $comment, int $totalLoaded): bool
+    {
+        return $this->createQueryBuilder('c')
+                ->select('count(c)')
+                ->andWhere('c.answerTo = :comment')
+                ->setParameter('comment', $comment)
+                ->getQuery()
+                ->getSingleScalarResult() > $totalLoaded;
     }
 
     // /**

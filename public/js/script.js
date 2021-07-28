@@ -56,7 +56,7 @@ $(document).ready(function(){
                     postComments.children('#pasteComments').before(createComment(comment));
                 }
                 if (data.isMoreAvailable === true) {
-                    postComments.children('#pasteComments').before(createViewMoreButton(2, url));
+                    postComments.children('#pasteComments').before(createViewMoreCommentsButton(2, url));
                 }
                 $this.data('loaded', true);
             });
@@ -67,7 +67,7 @@ $(document).ready(function(){
         let postComments = $(this).parents();
         let $this = $(this);
 
-        let url = $(this).data('comments-url');
+        let url = $(this).data('commentsUrl');
         let totalLoaded = $(this).data('totalLoaded');
 
         $.ajax({
@@ -87,7 +87,35 @@ $(document).ready(function(){
                 postComments.children('#pasteComments').before(createComment(comment));
             }
             if (data.isMoreAvailable === true) {
-                postComments.children('#pasteComments').before(createViewMoreButton(totalLoaded + 2, url));
+                postComments.children('#pasteComments').before(createViewMoreCommentsButton(totalLoaded + 2, url));
+            }
+        });
+    });
+
+    $(document).on('click', '.postMoreReply', function (event) {
+        let postComment = $(this).parents();
+        let $this = $(this);
+
+        let url = $(this).data('answersUrl');
+        let totalLoaded = $(this).data('totalLoaded');
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify({
+                startIndex: totalLoaded,
+                maxResult: 2
+            })
+        }).done(function (data) {
+            $this.remove();
+
+            for (let comment of data.answers) {
+                postComment.children('#pasteAnswers').before(createComment(comment));
+            }
+            if (data.isMoreAvailable === true) {
+                postComment.children('#pasteAnswers').before(createViewMoreCommentsButton(totalLoaded + 2, url));
             }
         });
     });
@@ -112,7 +140,7 @@ $(document).ready(function(){
 
 
 function createComment(comment) {
-    return `<div class="postComment">
+    let commentHtml = `<div class="postComment">
             <div class="postCommentUser">
                 <div class="postCommentUserIcon" style="background-image: url(${comment.author.avatar}); background-size: cover;"></div>
                 <div class="postUserInfo">
@@ -124,13 +152,55 @@ function createComment(comment) {
                 <p>${comment.body}</p>
             </div>
             <button class="postCommentReplyButton">Ответить</button>
-        </div>`;
+            <div style="display: none" id="pasteAnswers"></div>`;
+
+    if (comment.hasAnswers) {
+        commentHtml += createViewMoreAnswersMutton(0, comment.answersUrl);
+    }
+
+
+    commentHtml += `</div>`;
+    return commentHtml;
 }
 
-function createViewMoreButton(totalLoaded, commentsUrl) {
+function createAnswer(answer) {
+    let answerHtml =`<div className="postCommentReply">
+        <div className="postCommentUser">
+            <div className="postCommentUserIconReply"
+                 style="background-image: url(${answer.author.avatar}); background-size: cover;"></div>
+            <div className="postUserInfo">
+                <div className="postCommentUsername">${answer.author.username} <i className="fas fa-check-circle verifyIcon"
+                                                                            aria-hidden="true"></i></div>
+                <div className="postCommentTime">${answer.createdAt}</div>
+            </div>
+        </div>
+        <div className="postCommentContent">
+            <p>${answer.body}</p>
+        </div>
+        <button className="postCommentReplyButton">Ответить</button>
+        <div style="display: none" id="pasteAnswers"></div>`;
+
+    if (answer.hasAnswers) {
+        answerHtml += createViewMoreAnswersMutton(0, answer.answersUrl);
+    }
+
+    answerHtml += `</div>`;
+
+    return answerHtml;
+}
+
+function createViewMoreCommentsButton(totalLoaded, commentsUrl) {
     return `<button
                 class="postMoreCemmentsBtn"
                 data-total-loaded="${totalLoaded}"
                 data-comments-url="${commentsUrl}"
             >Показать больше комментариев <i class="fas fa-chevron-down" aria-hidden="true"></i></button>`;
+}
+
+function createViewMoreAnswersMutton(totalLoaded, answersUrl) {
+    return `<button
+                class="postMoreReply"
+                data-total-loaded="${totalLoaded}"
+                data-answers-url="${answersUrl}"
+            >Еще <i class="fas fa-chevron-down" aria-hidden="true"></i></button>`
 }
