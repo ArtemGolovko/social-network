@@ -61,12 +61,14 @@
         {% endfor %}
         #}
         <div style="display: none;" id="pasteComments"></div>
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
         <div class="makeCommentBlock">
-            <div class="postCommentUserIcon" style="background-image: url({{ asset('img/user.png') }}); background-size: cover;"></div>
+            <div class="postCommentUserIcon" style="background-image: url({{ asset(app.user.avatarUrl) }}); background-size: cover;"></div>
             <div class="mkcRight">
                 <input placeholder="Напишите свой комментарий..." type="text">
                 <button class="publishButtonComment">Опубликовать</button>
             </div>
         </div>
+        {% endif %}
     </div>
 </div>
