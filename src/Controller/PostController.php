@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Repository\PostRepository;
+use Doctrine\Common\Collections\Criteria;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,8 +33,10 @@ class PostController extends AbstractController
      */
     public function show(User $user, $index): Response
     {
+        $criteria = Criteria::create()->orderBy(['createdAt' => Criteria::ASC]);
+
         return $this->render('post/show.html.twig', [
-            'post' =>  $user->getPosts()->get($index)
+            'post' =>  $user->getPosts()->matching($criteria)->get($index)
         ]);
     }
 
@@ -42,7 +45,9 @@ class PostController extends AbstractController
      */
     public function url(Post $post, UrlGeneratorInterface $urlGenerator): Response
     {
-        $index = $post->getAuthor()->getPosts()->indexOf($post);
+        $criteria = Criteria::create()->orderBy(['createdAt' => Criteria::ASC]);
+        $index = $post->getAuthor()->getPosts()->matching($criteria)->indexOf($post);
+
         return $this->json([
             'url' => $urlGenerator->generate('app_post_show', [
                 'username' => $post->getAuthor()->getUsername(),

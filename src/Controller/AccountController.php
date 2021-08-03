@@ -25,7 +25,8 @@ class AccountController extends AbstractController
     public function userProfile(User $user): Response
     {
         return $this->render('account/user_profile.html.twig', [
-            'user' => $user
+            'user' => $user,
+
         ]);
     }
 }

@@ -43,7 +43,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Post::class, mappedBy="author")
-     * @ORM\OrderBy({"createdAt"="ASC"})
+     * @ORM\OrderBy({"createdAt"="DESC"})
      */
     private $posts;
 
