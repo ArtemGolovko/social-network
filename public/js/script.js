@@ -9,7 +9,7 @@ $(document).ready(function(){
         $(this).children('.postMoreMenu').toggleClass("active");
     });
 
-    $('.btn_like').click(function(event){
+    $(document).on('click', '.btn_like',function(event){
         let $this = $(this);
 
         $.ajax({
@@ -35,7 +35,7 @@ $(document).ready(function(){
     $('.userIcon').click(function(event){
         $('.profileMenuHeader').toggleClass("active");
     });
-    $('.btn_comment').click(function(event){
+    $(document).on('click', '.btn_comment', function(event){
         let postComments = $(this).parents().eq(2).children('.postComments');
         let $this = $(this);
 
@@ -120,7 +120,27 @@ $(document).ready(function(){
         });
     });
 
-    $('.btn_share').click(function (event) {
+    $('.publishButtonPost').click(function (event) {
+        let csrfToken =  $(this).data('_csrf_token');
+        let parent = $(this).parent();
+        let postBody = parent.children('.mkpLeft').children('.mkpInput').val();
+
+        $.ajax({
+            url: $(this).data('createPostUrl'),
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify({
+                '_csrf_token': csrfToken,
+                'postBody': postBody
+            })
+        }).done(function (data) {
+            parent.children('.mkpLeft').children('.mkpInput').val('');
+            parent.after(data.html);
+        });
+    });
+
+    $(document).on('click', '.btn_share', function (event) {
          let url = $(this).data('url');
          $.ajax({
              url: url,

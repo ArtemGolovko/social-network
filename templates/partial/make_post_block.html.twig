@@ -3,5 +3,9 @@
         <div class="postIconMkp" style="background-image: url({{ asset(app.user.avatarUrl) }}); background-size: cover;"></div>
         <input class="mkpInput" placeholder="Что нового?" type="text">
     </div>
-    <button class="publishButtonPost">Опубликовать</button>
+    <button
+            class="publishButtonPost"
+            data-create-post-url="{{ path('app_post_create') }}"
+            data-_csrf_token="{{ csrf_token('authenticate') }}"
+    >Опубликовать</button>
 </div>
