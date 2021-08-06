@@ -28,7 +28,7 @@
                 </div>
                 <div class="searchBox">
                     <i class="fas fa-search"></i>
-                    <input class="mainSearch" placeholder="Поиск" type="text">
+                    <input class="mainSearch" placeholder="{{ 'Поиск'|trans }}" type="text">
                 </div>
                 <button class="notificationIcon"><i class="fas fa-bell"></i><div class="round"></div></button>
             </div>
@@ -51,11 +51,11 @@
                     <div class="headerIcon" style="background-image: url({{ asset(app.user.avatarUrl) }}); background-size: cover;"></div>
                 </div>
                 <div class="profileMenuHeader">
-                    <a href="{{ path('app_current_user_profile') }}"><i class="fas fa-user"></i> Мой профиль</a>
-                    <a href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> Выйти из аккаунта</a>
+                    <a href="{{ path('app_current_user_profile') }}"><i class="fas fa-user"></i> {{ 'Мой профиль'|trans }}</a>
+                    <a href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> {{ 'Выйти из аккаунта'|trans }}</a>
                 </div>
                 {% else %}
-                    <a href="{{ path('app_login') }}"><button class="loginBtnHeader">Войти</button></a>
+                    <a href="{{ path('app_login') }}"><button class="loginBtnHeader">{{ 'Войти'|trans }}</button></a>
 {#                    <a href="{{ path('app_register') }}"><button class="loginBtnHeader">Войти</button></a>#}
                 {% endif %}
             </div>
@@ -65,12 +65,12 @@
 <div class="container">
     <div class="content">
         <div class="userPanel">
-            <div class="upLabel" id="homepage"><i class="fas fa-home"></i><a href="{{ path('app_homepage') }}">Главная</a></div>
-            <div class="upLabel"><i class="fas fa-search"></i><a href="#">Поиск</a></div>
-            <div class="upLabel"><i class="fas fa-comments"></i><a href="#">Сообщения</a></div>
-            <div class="upLabel"><i class="fas fa-star"></i><a href="#">Избранное</a></div>
-            <div class="upLabel"><i class="fas fa-user-plus"></i><a href="#">Подписки</a></div>
-            <div class="upLabel"><i class="fas fa-cog"></i><a href="#">Настройки</a></div>
+            <div class="upLabel" id="homepage"><i class="fas fa-home"></i><a href="{{ path('app_homepage') }}">{{ 'Главная'|trans }}</a></div>
+            <div class="upLabel"><i class="fas fa-search"></i><a href="#">{{ 'Поиск'|trans }}</a></div>
+            <div class="upLabel"><i class="fas fa-comments"></i><a href="#">{{ 'Сообщения'|trans }}</a></div>
+            <div class="upLabel"><i class="fas fa-star"></i><a href="#">{{ 'Избранное'|trans }}</a></div>
+            <div class="upLabel"><i class="fas fa-user-plus"></i><a href="#">{{ 'Подписки'|trans }}</a></div>
+            <div class="upLabel"><i class="fas fa-cog"></i><a href="#">{{ 'Настройки'|trans }}</a></div>
         </div>
         <div class="mainContent">
             {% block content %}{% endblock %}

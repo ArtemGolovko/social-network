@@ -1,5 +1,8 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
+    default_locale: '%default_locale%'
+    translator:
+        default_path: '%kernel.project_dir%/translations'
     secret: '%env(APP_SECRET)%'
     #csrf_protection: true
     #http_method_override: true

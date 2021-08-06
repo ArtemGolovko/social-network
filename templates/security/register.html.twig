@@ -3,7 +3,7 @@
 {% block title %}Регистрация - Митер{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="css/login.css"
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -16,31 +16,31 @@
     </div>
 
     <div class="container">
-        <label for="name"><span class="loginText">Имя</span></label>
+        <label for="name"><span class="loginText">{{ 'Имя'|trans }}</span></label>
         <div class="inputField">
-            <i class="fas fa-user"></i><input type="text" placeholder="Введите имя" name="name" required>
+            <i class="fas fa-user"></i><input type="text" placeholder="{{ 'Введите имя'|trans }}" name="name" required>
         </div>
 
-        <label for="name"><span class="loginText">Имя пользователя (никнейм)</span></label>
+        <label for="name"><span class="loginText">{{ 'Имя пользователя'|trans }} {% if app.request.locale in ['ru', 'uk'] %}({{ 'Никнейм'|trans }}){% endif %}</span></label>
         <div class="inputField">
-            <i class="fas fa-at"></i><input type="text" placeholder="Введите никнейм" name="username" required>
+            <i class="fas fa-at"></i><input type="text" placeholder="{{ 'Введите никнейм'|trans }}" name="username" required>
         </div>
 
         <label for="psw"><span class="loginText">Email</span></label>
         <div class="inputField">
-            <i class="fas fa-envelope"></i><input type="email" placeholder="Введите электронною почту" name="email" required>
+            <i class="fas fa-envelope"></i><input type="email" placeholder="{{ 'Введите электронною почту'|trans }}" name="email" required>
         </div>
 
-        <label for="psw"><span class="loginText">Пароль</span></label>
+        <label for="psw"><span class="loginText">{{ 'Пароль'|trans }}</span></label>
         <div class="inputField">
-            <i class="fas fa-key"></i><input type="password" placeholder="Введите пароль" name="password" required>
+            <i class="fas fa-key"></i><input type="password" placeholder="{{ 'Введите пароль'|trans }}" name="password" required>
         </div>
 
-        <button type="submit">Зарегистрироваться</button>
+        <button type="submit">{{ 'Зарегистрироваться'|trans }}</button>
         <label>
-            <div class="rememberMe"><input type="checkbox" checked="checked" name="_remember_me"> <span>Запомнить меня</span></div>
+            <div class="rememberMe"><input type="checkbox" checked="checked" name="_remember_me"> <span>{{ 'Запомнить меня'|trans }}</span></div>
         </label>
-        <a href="{{ path('app_login') }}">Уже зарегистрированы? Войти</a>
+        <a href="{{ path('app_login') }}">{{ 'Уже зарегистрированы? Войти'|trans }}</a>
     </div>
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 </form>

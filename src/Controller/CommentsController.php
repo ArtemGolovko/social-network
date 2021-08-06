@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Post;
 use App\Repository\CommentRepository;
-use Carbon\Carbon;
+use App\Service\DateTimeDifferInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,15 +18,21 @@ class CommentsController extends AbstractController
     private CommentRepository $commentRepository;
     private Packages $packages;
     private UrlGeneratorInterface $urlGenerator;
+    private DateTimeDifferInterface $dateTimeDiffer;
 
     /**
      * CommentsController constructor.
      */
-    public function __construct(CommentRepository $commentRepository, Packages $packages, UrlGeneratorInterface $urlGenerator)
-    {
+    public function __construct(
+        CommentRepository $commentRepository,
+        Packages $packages,
+        UrlGeneratorInterface $urlGenerator,
+        DateTimeDifferInterface $dateTimeDiffer
+    ) {
         $this->commentRepository = $commentRepository;
         $this->packages = $packages;
         $this->urlGenerator = $urlGenerator;
+        $this->dateTimeDiffer = $dateTimeDiffer;
     }
 
     /**
@@ -51,7 +57,7 @@ class CommentsController extends AbstractController
                     'avatar' => $this->packages->getUrl($comment->getAuthor()->getAvatarUrl()),
                     'username' => $comment->getAuthor()->getUsername(),
                 ],
-                'createdAt' => Carbon::make($comment->getCreatedAt())->locale('ru')->diffForHumans(),
+                'createdAt' => $this->dateTimeDiffer->getDiff($comment->getCreatedAt()),
                 'body' => $comment->getBody(),
                 'hasAnswers' => !$comment->getAnswers()->isEmpty(),
                 'answersUrl' => $this->urlGenerator->generate(
@@ -85,7 +91,7 @@ class CommentsController extends AbstractController
                     'avatar' => $this->packages->getUrl($answer->getAuthor()->getAvatarUrl()),
                     'username' => $answer->getAuthor()->getUsername(),
                 ],
-                'createdAt' => Carbon::make($answer->getCreatedAt())->locale('ru')->diffForHumans(),
+                'createdAt' => $this->dateTimeDiffer->getDiff($comment->getCreatedAt()),
                 'body' => $answer->getBody(),
                 'hasAnswers' => !$answer->getAnswers()->isEmpty(),
                 'answersUrl' => $this->urlGenerator->generate(

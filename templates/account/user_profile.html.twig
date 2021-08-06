@@ -7,7 +7,7 @@
         <div class="profileIcon" style="background-image: url({{ asset(user.avatarUrl) }}); background-size: cover;"></div>
         <div class="profileButtons">
             <button class="message"><i class="fas fa-comments"></i></button>
-            <button class="subscribeProfile"><span id="subscribeLabel">ПОДПИСАТСЯ</span></button>
+            <button class="subscribeProfile"><span id="subscribeLabel">{{ 'ПОДПИСАТСЯ'|trans }}</span></button>
         </div>
     </div>
     <div class="profileInfo">
@@ -17,9 +17,9 @@
         </div>
         <div class="profileDesc">profileDesc</div>
         <div class="profileStats">
-            <span class="stat">0 подписчиков</span>
-            <span class="stat">{{ user.posts|length }} постов</span>
-            <span class="stat">0 подписок</span>
+            <span class="stat">{{ 'num_of_subscribers'|trans({subscribers: 0}) }}</span>
+            <span class="stat">{{ 'num_of_posts'|trans({posts: user.posts|length}) }}</span>
+            <span class="stat">{{ 'num_of_subscribed'|trans({subscribed: 0}) }}</span>
         </div>
     </div>
 </div>
