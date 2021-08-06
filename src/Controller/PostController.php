@@ -19,7 +19,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 class PostController extends AbstractController
 {
     /**
-     * @Route("/", name="app_homepage")
+     * @Route("/", name="app_homepage", host="%domain%")
      */
     public function index(PostRepository $postRepository): Response
     {
@@ -29,13 +29,36 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/{username}/{index<\d+>}", name="app_post_show")
+     * @Route("/", name="app_mibile_homepage", host="m.%domain%")
+     */
+    public function mobileIndex(PostRepository $postRepository): Response
+    {
+        return $this->render('mobile/not_implemented.html.twig', [
+            'posts' => $postRepository->findLatestPublished()
+        ]);
+    }
+
+
+    /**
+     * @Route("/{username}/{index<\d+>}", name="app_post_show", host="%domain%")
      */
     public function show(User $user, $index): Response
     {
         $criteria = Criteria::create()->orderBy(['createdAt' => Criteria::ASC]);
 
         return $this->render('post/show.html.twig', [
+            'post' =>  $user->getPosts()->matching($criteria)->get($index)
+        ]);
+    }
+
+    /**
+     * @Route("/{username}/{index<\d+>}", name="app_mobile_post_show", host="m.%domain%")
+     */
+    public function mobileShow(User $user, $index): Response
+    {
+        $criteria = Criteria::create()->orderBy(['createdAt' => Criteria::ASC]);
+
+        return $this->render('mobile/not_implemented.html.twig', [
             'post' =>  $user->getPosts()->matching($criteria)->get($index)
         ]);
     }
