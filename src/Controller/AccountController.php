@@ -33,6 +33,9 @@ class AccountController extends AbstractController
      */
     public function userProfile(User $user): Response
     {
+        if ($user == $this->getUser()) {
+            return $this->redirectToRoute('app_current_user_profile');
+        }
         return $this->render('account/user_profile.html.twig', [
             'user' => $user,
         ]);
@@ -43,6 +46,9 @@ class AccountController extends AbstractController
      */
     public function MobileUserProfile(User $user): Response
     {
+        if ($user == $this->getUser()) {
+            return $this->redirectToRoute('app_current_user_profile');
+        }
         return $this->render('mobile/not_implemented.html.twig', [
             'user' => $user,
         ]);

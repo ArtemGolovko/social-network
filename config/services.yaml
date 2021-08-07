@@ -34,3 +34,5 @@ services:
     # please note that last definitions always *replace* previous ones
     App\Service\DateTimeDifferInterface: '@App\Service\DateTimeDiffer'
     App\Service\DateTimeDiffer: ~
+
+    App\Handler\LogoutHandler: ~
