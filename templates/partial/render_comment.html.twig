@@ -9,7 +9,7 @@
     <div class="postCommentContent">
         <p>{{  comment.body }}</p>
     </div>
-    <button class="postCommentReplyButton">Ответить</button>
+    <button class="postCommentReplyButton">{{ 'Ответить'|trans }}</button>
     {% if hasAnswers %}
         {% include 'partial/view_more_answers_button.html.twig' with { 'totalLoaded': 0, 'answersUrl': path('app_comment_answers', { 'id': comment.id }) } %}
     {% endif %}

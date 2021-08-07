@@ -1,7 +1,7 @@
 <div class="makeCommentBlock">
     <div class="postCommentUserIcon" style="background-image: url({{ asset(app.user.avatarUrl) }}); background-size: cover;"></div>
     <div class="mkcRight">
-        <input placeholder="Напишите свой комментарий..." type="text">
-        <button class="publishButtonComment">Опубликовать</button>
+        <input placeholder="{{ 'Напишите свой комментарий...'|trans }}" type="text">
+        <button class="publishButtonComment">{{ 'Опубликовать'|trans }}</button>
     </div>
 </div>
