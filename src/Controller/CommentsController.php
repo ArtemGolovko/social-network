@@ -5,34 +5,20 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Post;
 use App\Repository\CommentRepository;
-use App\Service\DateTimeDifferInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Asset\Packages;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CommentsController extends AbstractController
 {
     private CommentRepository $commentRepository;
-    private Packages $packages;
-    private UrlGeneratorInterface $urlGenerator;
-    private DateTimeDifferInterface $dateTimeDiffer;
 
     /**
      * CommentsController constructor.
      */
-    public function __construct(
-        CommentRepository $commentRepository,
-        Packages $packages,
-        UrlGeneratorInterface $urlGenerator,
-        DateTimeDifferInterface $dateTimeDiffer
-    ) {
+    public function __construct(CommentRepository $commentRepository) {
         $this->commentRepository = $commentRepository;
-        $this->packages = $packages;
-        $this->urlGenerator = $urlGenerator;
-        $this->dateTimeDiffer = $dateTimeDiffer;
     }
 
     /**
@@ -46,27 +32,23 @@ class CommentsController extends AbstractController
 
         $isMoreAvailable = $this->commentRepository->isMoreCommentsAvailable($post, $data['startIndex'] + $data['maxResult']);
 
-        $responseData = [
-            'comments' => [],
-            'isMoreAvailable' => $isMoreAvailable
-        ];
+        $html = '';
 
         foreach ($comments as $comment) {
-            $responseData['comments'][] = [
-                'author' => [
-                    'avatar' => $this->packages->getUrl($comment->getAuthor()->getAvatarUrl()),
-                    'username' => $comment->getAuthor()->getUsername(),
-                ],
-                'createdAt' => $this->dateTimeDiffer->getDiff($comment->getCreatedAt()),
-                'body' => $comment->getBody(),
-                'hasAnswers' => !$comment->getAnswers()->isEmpty(),
-                'answersUrl' => $this->urlGenerator->generate(
-                    'app_comment_answers',
-                    ['id' => $comment->getId()]
-                )
-            ];
+            $html .= $this->renderView('partial/render_comment.html.twig', [
+                'comment' => $comment,
+                'hasAnswers' => !$comment->getAnswers()->isEmpty()
+            ]);
         }
-        return $this->json($responseData);
+
+        if ($isMoreAvailable) {
+            $html .= $this->renderView('partial/view_more_comments_button.html.twig', [
+                'totalLoaded' => $data['startIndex'] + $data['maxResult'],
+                'commentsUrl' => $request->getRequestUri()
+            ]);
+        }
+
+        return new Response($html);
     }
 
     /**
@@ -80,26 +62,21 @@ class CommentsController extends AbstractController
 
         $isMoreAvailable = $this->commentRepository->isMoreAnswersAvailable($comment, $data['startIndex'] + $data['maxResult']);
 
-        $responseData = [
-            'answers' => [],
-            'isMoreAvailable' => $isMoreAvailable
-        ];
+        $html = '';
 
         foreach ($answers as $answer) {
-            $responseData['answers'][] = [
-                'author' => [
-                    'avatar' => $this->packages->getUrl($answer->getAuthor()->getAvatarUrl()),
-                    'username' => $answer->getAuthor()->getUsername(),
-                ],
-                'createdAt' => $this->dateTimeDiffer->getDiff($comment->getCreatedAt()),
-                'body' => $answer->getBody(),
-                'hasAnswers' => !$answer->getAnswers()->isEmpty(),
-                'answersUrl' => $this->urlGenerator->generate(
-                    'app_comment_answers',
-                    ['id' => $answer->getId()]
-                )
-            ];
+            $html .= $this->renderView('partial/render_answer.html.twig', [
+                'answer' => $answer,
+                'hasAnswers' => !$answer->getAnswers()->isEmpty()
+            ]);
         }
-        return $this->json($responseData);
+
+        if ($isMoreAvailable) {
+            $html .= $this->renderView('partial/view_more_answers_button.html.twig', [
+                'totalLoaded' => $data['startIndex'] + $data['maxResult'],
+                'answersUrl' => $request->getRequestUri()
+            ]);
+        }
+        return new Response($html);
     }
 }

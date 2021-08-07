@@ -1,0 +1,18 @@
+<div class="postCommentReply">
+    <div class="postCommentUser">
+        <div class="postCommentUserIconReply"
+             style="background-image: url({{ asset(answer.author.avatarUrl) }}); background-size: cover;"></div>
+        <div class="postUserInfo">
+            <div class="postCommentUsername">{{ answer.author.username }} <i class="fas fa-check-circle verifyIcon"
+                                                                              aria-hidden="true"></i></div>
+            <div class="postCommentTime">{{ answer.createdAt|ago }}</div>
+        </div>
+    </div>
+    <div class="postCommentContent">
+        <p>{{ answer.body }}</p>
+    </div>
+    <button class="postCommentReplyButton">Ответить</button>
+    {% if hasAnswers %}
+        {% include 'partial/view_more_answers_button.html.twig' with { 'totalLoaded': 0, 'answersUrl': path('app_comment_answers', { 'id': answer.id }) } %}
+    {% endif %}
+</div>
