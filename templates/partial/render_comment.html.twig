@@ -9,7 +9,12 @@
     <div class="postCommentContent">
         <p>{{  comment.body }}</p>
     </div>
-    <button class="postCommentReplyButton">{{ 'Ответить'|trans }}</button>
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    <button
+        class="postCommentReplyButton"
+        data-load-make-answer-block-url="{{ path('app_comment_make_answer_block', { 'id': comment.id }) }}"
+    >{{ 'Ответить'|trans }}</button>
+    {% endif %}
     {% if hasAnswers %}
         {% include 'partial/view_more_answers_button.html.twig' with { 'totalLoaded': 0, 'answersUrl': path('app_comment_answers', { 'id': comment.id }) } %}
     {% endif %}

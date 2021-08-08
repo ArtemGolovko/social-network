@@ -1,0 +1,11 @@
+<div class="makeReplyBlock">
+    <div class="postCommentUserIconReply" style="background-image: url({{ asset(app.user.avatarUrl) }}); background-size: cover;"></div>
+    <div class="mkrRight">
+        <input placeholder="{{ 'Напишите свой комментарий'|trans }}" type="text">
+        <button
+            class="publishButtonComment"
+            data-create-answer-url="{{ createAnswerUrl }}"
+            data-_csrf_token="{{ csrf_token('authenticate') }}"
+        >{{ 'Опубликовать'|trans }}</button>
+    </div>
+</div>

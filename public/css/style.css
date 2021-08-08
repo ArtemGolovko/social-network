@@ -136,6 +136,7 @@ header{
 .mainContent{
     margin-left: 20%;
     width: 100%;
+    z-index: 1;
 }
 
 .content{

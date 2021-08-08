@@ -109,13 +109,53 @@ class CommentsController extends AbstractController
     }
 
     /**
-     * @Route("/posts/{id}/make-comments-block", name="app_post_make_comment_block", methods={"POST"})
+     * @Route("/comments/{id}/answers/create", name="app_comments_answers_create", methods={"POST"})
      * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
+     */
+    public function createAnswer(Comment $comment, Request $request): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $answer = (new Comment())
+            ->setAuthor($this->getUser())
+            ->setBody($data['commentBody'])
+            ->setPost($comment->getPost())
+            ->setAnswerTo($comment)
+        ;
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($answer);
+        $em->flush();
+
+        return $this->json([
+            'html' => $this->renderView('partial/render_answer.html.twig', [
+                'answer' => $answer,
+                'hasAnswers' => false
+            ])
+        ]);
+    }
+
+    /**
+     * @Route("/posts/{id}/make-comments-block", name="app_post_make_comment_block", methods={"POST"})
      */
     public function loadMakeCommentBlock($id, UrlGeneratorInterface $urlGenerator): Response
     {
+        if (!$this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return new Response('');
+        }
         return $this->render('partial/make_comment_block.html.twig', [
             'createCommentUrl' => $urlGenerator->generate('app_post_comments_create', ['id' => $id])
+        ]);
+    }
+
+    /**
+     * @Route("/commnts/{id}/make-answers-block", name="app_comment_make_answer_block", methods={"POST"})
+     * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
+     */
+    public function loadMakeAnswerBlock($id, UrlGeneratorInterface $urlGenerator): Response
+    {
+        return $this->render('partial/make_answer_block.html.twig', [
+            'createAnswerUrl' => $urlGenerator->generate('app_comments_answers_create', ['id' => $id])
         ]);
     }
 }

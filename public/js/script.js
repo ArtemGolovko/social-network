@@ -54,7 +54,7 @@ $(document).ready(function(){
                 })
             }).done(function (data) {
                 postComments.prepend(data);
-                postComments.append(loadMakeCommentBlock(loadMakeCommentBlockUrl));
+                postComments.append(loadHtml(loadMakeCommentBlockUrl));
                 $this.data('loaded', true);
             });
         }
@@ -123,7 +123,7 @@ $(document).ready(function(){
             parent.after(data.html);
         });
     });
-    $(document).on('click', '.publishButtonComment', function (event) {
+    $(document).on('click', '.makeCommentBlock .publishButtonComment', function (event) {
         let csrf_token = $(this).data('_csrf_token');
         let input = $(this).parent().children('input');
         let postComments = $(this).parents().eq(2);
@@ -141,6 +141,29 @@ $(document).ready(function(){
             input.val('');
             postComments.prepend(data.html);
         });
+    });
+    $(document).on('click', '.makeReplyBlock .publishButtonComment', function (event) {
+        let csrf_token = $(this).data('_csrf_token');
+        let input = $(this).parent().children('input');
+        let commentAnswers = $(this).parents().eq(2).children('.postCommentContent');
+
+        $.ajax({
+            url: $(this).data('createAnswerUrl'),
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify({
+                '_csrf_token': csrf_token,
+                'commentBody': input.val()
+            })
+        }).done(function (data) {
+            input.val('');
+            commentAnswers.after(data.html);
+        });
+    });
+    $(document).on('click', '.postCommentReplyButton', function (event) {
+        $(this).parent().append(loadHtml($(this).data('load-make-answer-block-url')));
+        $(this).remove();
     });
     $(document).on('click', '.btn_share', function (event) {
          let url = $(this).data('url');
@@ -171,7 +194,7 @@ $(document).ready(function(){
     });
 });
 
-function loadMakeCommentBlock(url)
+function loadHtml(url)
 {
     let html;
     $.ajax({
