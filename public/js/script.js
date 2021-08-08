@@ -40,6 +40,7 @@ $(document).ready(function(){
         let $this = $(this);
 
         let url = $(this).data('comments-url');
+        let loadMakeCommentBlockUrl = $(this).data('loadMakeCommentBlockUrl');
 
         if ($(this).data('loaded') === false) {
             $.ajax({
@@ -53,6 +54,7 @@ $(document).ready(function(){
                 })
             }).done(function (data) {
                 postComments.prepend(data);
+                postComments.append(loadMakeCommentBlock(loadMakeCommentBlockUrl));
                 $this.data('loaded', true);
             });
         }
@@ -121,7 +123,25 @@ $(document).ready(function(){
             parent.after(data.html);
         });
     });
+    $(document).on('click', '.publishButtonComment', function (event) {
+        let csrf_token = $(this).data('_csrf_token');
+        let input = $(this).parent().children('input');
+        let postComments = $(this).parents().eq(2);
 
+        $.ajax({
+            url: $(this).data('createCommentUrl'),
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify({
+                '_csrf_token': csrf_token,
+                'commentBody': input.val()
+            })
+        }).done(function (data) {
+            input.val('');
+            postComments.prepend(data.html);
+        });
+    });
     $(document).on('click', '.btn_share', function (event) {
          let url = $(this).data('url');
          $.ajax({
@@ -150,3 +170,18 @@ $(document).ready(function(){
         }
     });
 });
+
+function loadMakeCommentBlock(url)
+{
+    let html;
+    $.ajax({
+        url: url,
+        type: 'POST',
+        async: false,
+        dataType: 'html'
+    }).done(function (data) {
+        html = data;
+    });
+
+    return html;
+}

@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Post;
 use App\Repository\CommentRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CommentsController extends AbstractController
 {
@@ -78,5 +80,42 @@ class CommentsController extends AbstractController
             ]);
         }
         return new Response($html);
+    }
+
+    /**
+     * @Route("/posts/{id}/comments/create", name="app_post_comments_create", methods={"POST"})
+     * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
+     */
+    public function createComment(Post $post, Request $request): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $comment = (new Comment())
+            ->setAuthor($this->getUser())
+            ->setBody($data['commentBody'])
+            ->setPost($post)
+        ;
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($comment);
+        $em->flush();
+
+        return $this->json([
+            'html' => $this->renderView('partial/render_comment.html.twig', [
+                'comment' => $comment,
+                'hasAnswers' => false
+            ])
+        ]);
+    }
+
+    /**
+     * @Route("/posts/{id}/make-comments-block", name="app_post_make_comment_block", methods={"POST"})
+     * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
+     */
+    public function loadMakeCommentBlock($id, UrlGeneratorInterface $urlGenerator): Response
+    {
+        return $this->render('partial/make_comment_block.html.twig', [
+            'createCommentUrl' => $urlGenerator->generate('app_post_comments_create', ['id' => $id])
+        ]);
     }
 }

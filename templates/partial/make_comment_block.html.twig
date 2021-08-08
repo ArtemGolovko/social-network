@@ -2,6 +2,10 @@
     <div class="postCommentUserIcon" style="background-image: url({{ asset(app.user.avatarUrl) }}); background-size: cover;"></div>
     <div class="mkcRight">
         <input placeholder="{{ 'Напишите свой комментарий...'|trans }}" type="text">
-        <button class="publishButtonComment">{{ 'Опубликовать'|trans }}</button>
+        <button
+            class="publishButtonComment"
+            data-create-comment-url="{{ createCommentUrl }}"
+    data-_csrf_token="{{ csrf_token('authenticate') }}"
+        >{{ 'Опубликовать'|trans }}</button>
     </div>
 </div>
