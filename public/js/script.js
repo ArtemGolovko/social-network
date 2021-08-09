@@ -5,21 +5,21 @@ $(document).ready(function(){
         homepageLabel.children('a').attr('style','color: rgb(255, 136, 0); font-weight: 700;');
     }
 
-    $('.postMore').click(function(event){
+    $(document).on('click', '.postMore', function(event){
         $(this).children('.postMoreMenu').toggleClass("active");
     });
 
     $(document).on('click', '.btn_like',function(event){
         let $this = $(this);
+        let $$this = this;
 
         $.ajax({
-            url: $(this).data(`${$(this).data('action')}Url`),
+            url: this.dataset[`${this.dataset.action}Url`],
             type: 'POST',
             dataType: 'json'
         }).done(function(data) {
-            console.log('data');
             $this.parent().children('#likesCount').text(data.likesCount);
-            $this.data('action', ($(this).data('action') === 'like') ? 'dislike' : 'like');
+            $$this.dataset.action =  ($$this.dataset.action === 'like') ? 'dislike' : 'like';
 
             $this.children('.fa-heart').toggleClass("active");
             $this.toggleClass("active");
@@ -55,7 +55,7 @@ $(document).ready(function(){
             }).done(function (data) {
                 postComments.prepend(data);
                 postComments.append(loadHtml(loadMakeCommentBlockUrl));
-                $this.data('loaded', true);
+                $this.attr('data-loaded', true);
             });
         }
         postComments.toggleClass("active");

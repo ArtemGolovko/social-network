@@ -72,7 +72,7 @@
             <div class="upLabel"><i class="fas fa-user-plus"></i><a href="#">{{ 'Подписки'|trans }}</a></div>
             <div class="upLabel"><i class="fas fa-cog"></i><a href="#">{{ 'Настройки'|trans }}</a></div>
         </div>
-        <div class="mainContent">
+        <div class="mainContent" {% block mainContentAttrs %}{% endblock %}>
             {% block content %}{% endblock %}
         </div>
     </div>

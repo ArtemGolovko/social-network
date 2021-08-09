@@ -1,5 +1,10 @@
 {% extends 'base_content.html.twig' %}
 
+{% block mainContentAttrs %}data-load-posts-url="{{ path('app_user_post', {'id': user.id}) }}"{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/postsInfinityLoad.js') }}"></script>
+{% endblock %}
 {% block content %}
 <div class="profileBlock">
     <div class="profileHeader">
@@ -23,7 +28,7 @@
         </div>
     </div>
 </div>
-{% for post in user.posts %}
-    {% include 'partial/render_post.html.twig' with {'post': post} %}
-{% endfor %}
+{#{% for post in user.posts %}#}
+{#    {% include 'partial/render_post.html.twig' with {'post': post} %}#}
+{#{% endfor %}#}
 {% endblock %}

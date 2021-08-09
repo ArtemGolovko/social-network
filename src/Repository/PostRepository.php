@@ -22,7 +22,7 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    public function findLatestPublished()
+    public function findLatestPublishedWithPagination(int $firstResult, int $maxResults)
     {
         $query = $this->createQueryBuilder('p')
             ->leftJoin('p.author', 'a')
@@ -32,7 +32,27 @@ class PostRepository extends ServiceEntityRepository
             ->leftJoin('p.comments', 'c')
             ->addSelect('c')
             ->orderBy('p.createdAt', 'DESC')
-            ->setMaxResults(25)
+            ->setFirstResult($firstResult)
+            ->setMaxResults($maxResults)
+        ;
+
+        return new Paginator($query);
+    }
+
+    public function findByUserWithPagination(User $user, int $firstResult, int $maxResults)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->leftJoin('p.author', 'a')
+            ->addSelect('a')
+            ->leftJoin('p.likes', 'l')
+            ->addSelect('l')
+            ->leftJoin('p.comments', 'c')
+            ->addSelect('c')
+            ->orderBy('p.createdAt', 'DESC')
+            ->andWhere('p.author = :user')
+            ->setParameter('user', $user)
+            ->setFirstResult($firstResult)
+            ->setMaxResults($maxResults)
         ;
 
         return new Paginator($query);

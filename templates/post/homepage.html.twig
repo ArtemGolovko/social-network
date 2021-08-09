@@ -1,10 +1,16 @@
 {% extends 'base_content.html.twig' %}
 
+{% block mainContentAttrs %}data-load-posts-url="{{ path('app_post') }}"{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/postsInfinityLoad.js') }}"></script>
+{% endblock %}
+
 {% block content %}
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {{ include('partial/make_post_block.html.twig') }}
     {% endif %}
-    {% for post in posts %}
-        {% include 'partial/render_post.html.twig' with {'post': post} %}
-    {% endfor %}
+{#    {% for post in posts %}#}
+{#        {% include 'partial/render_post.html.twig' with {'post': post} %}#}
+{#    {% endfor %}#}
 {% endblock %}

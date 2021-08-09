@@ -23,9 +23,7 @@ class PostController extends AbstractController
      */
     public function index(PostRepository $postRepository): Response
     {
-        return $this->render('post/homepage.html.twig', [
-            'posts' => $postRepository->findLatestPublished()
-        ]);
+        return $this->render('post/homepage.html.twig');
     }
 
     /**
@@ -33,9 +31,7 @@ class PostController extends AbstractController
      */
     public function mobileIndex(PostRepository $postRepository): Response
     {
-        return $this->render('mobile/not_implemented.html.twig', [
-            'posts' => $postRepository->findLatestPublished()
-        ]);
+        return $this->render('mobile/not_implemented.html.twig');
     }
 
 
@@ -108,6 +104,24 @@ class PostController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/posts", name="app_post", methods={"POST"})
+     */
+    public function posts(Request $request, PostRepository $postRepository)
+    {
+        $data = json_decode($request->getContent(), true);
 
+        $html = '';
+
+        $posts = $postRepository->findLatestPublishedWithPagination($data['startIndex'], $data['maxResult']);
+
+        foreach ($posts as $post) {
+            $html .= $this->renderView('partial/render_post.html.twig', [
+                'post' => $post
+            ]);
+        }
+
+        return new Response($html);
+    }
 
 }

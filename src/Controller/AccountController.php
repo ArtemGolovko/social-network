@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\PostRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -52,5 +54,25 @@ class AccountController extends AbstractController
         return $this->render('mobile/not_implemented.html.twig', [
             'user' => $user,
         ]);
+    }
+
+    /**
+     * @Route("/user/{id}/posts", name="app_user_post", methods={"POST"})
+     */
+    public function UserPosts(User $user, Request $request, PostRepository $postRepository): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $html = '';
+
+        $posts = $postRepository->findByUserWithPagination($user, $data['startIndex'], $data['maxResult']);
+
+        foreach ($posts as $post) {
+            $html .= $this->renderView('partial/render_post.html.twig', [
+                'post' => $post
+            ]);
+        }
+
+        return new Response($html);
     }
 }
