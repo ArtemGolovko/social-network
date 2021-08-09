@@ -11,16 +11,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class CommentsController extends AbstractController
 {
     private CommentRepository $commentRepository;
+    private CsrfTokenManagerInterface $csrfTokenManager;
 
     /**
      * CommentsController constructor.
      */
-    public function __construct(CommentRepository $commentRepository) {
+    public function __construct(CommentRepository $commentRepository, CsrfTokenManagerInterface $csrfTokenManager) {
         $this->commentRepository = $commentRepository;
+        $this->csrfTokenManager = $csrfTokenManager;
     }
 
     /**
@@ -89,6 +94,13 @@ class CommentsController extends AbstractController
     public function createComment(Post $post, Request $request): Response
     {
         $data = json_decode($request->getContent(), true);
+
+        $token = new CsrfToken('authenticate', $data['_csrf_token']);
+
+        if (!$this->csrfTokenManager->isTokenValid($token)) {
+            throw new InvalidCsrfTokenException();
+        }
+
         $comment = (new Comment())
             ->setAuthor($this->getUser())
             ->setBody($data['commentBody'])
@@ -115,6 +127,13 @@ class CommentsController extends AbstractController
     public function createAnswer(Comment $comment, Request $request): Response
     {
         $data = json_decode($request->getContent(), true);
+
+        $token = new CsrfToken('authenticate', $data['_csrf_token']);
+
+        if (!$this->csrfTokenManager->isTokenValid($token)) {
+            throw new InvalidCsrfTokenException();
+        }
+
         $answer = (new Comment())
             ->setAuthor($this->getUser())
             ->setBody($data['commentBody'])
