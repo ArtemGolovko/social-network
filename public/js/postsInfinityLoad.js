@@ -5,32 +5,46 @@ $(document).ready(function () {
     const maxResult = 2;
     $(window).scroll(function () {
         if ($(window).scrollTop() >= $(document).height() - $(window).height() - 25) {
-            mainContent.append(loadPosts(loadPostUrl, totalLoaded, maxResult));
-            totalLoaded += maxResult;
+            let posts = loadPosts(loadPostUrl, totalLoaded, maxResult);
+            for (let post of posts) {
+                $('.mainContent').append(post);
+                ++totalLoaded;
+            }
+
+            if (posts.length < maxResult) {
+                $(window).off('scroll');
+            }
         }
     });
 
     while ($(window).scrollTop() >= $(document).height() - $(window).height() - 25) {
-        $('.mainContent').append(loadPosts(loadPostUrl, totalLoaded, maxResult));
-        totalLoaded += maxResult;
+        let posts = loadPosts(loadPostUrl, totalLoaded, maxResult);
+        for (let post of posts) {
+            $('.mainContent').append(post);
+            ++totalLoaded;
+        }
+
+        if (posts.length < maxResult) {
+            break;
+        }
     }
 });
 
 function loadPosts(url, totalLoaded, maxResult)
 {
-    let html;
+    let posts;
     $.ajax({
         url: url,
         async: false,
         type: 'POST',
-        dataType: 'html',
+        dataType: 'json',
         contentType: 'application/json;charset=utf-8',
         data: JSON.stringify({
             startIndex: totalLoaded,
             maxResult: maxResult
         })
     }).done(function (data) {
-        html = data;
+        posts = data;
     });
-    return html;
+    return posts;
 }

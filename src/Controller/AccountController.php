@@ -63,16 +63,16 @@ class AccountController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
 
-        $html = '';
+        $renderedPosts = [];
 
         $posts = $postRepository->findByUserWithPagination($user, $data['startIndex'], $data['maxResult']);
 
         foreach ($posts as $post) {
-            $html .= $this->renderView('partial/render_post.html.twig', [
+            $renderedPosts[] = $this->renderView('partial/render_post.html.twig', [
                 'post' => $post
             ]);
         }
 
-        return new Response($html);
+        return $this->json($renderedPosts);
     }
 }
