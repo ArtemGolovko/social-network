@@ -21,14 +21,14 @@ class CommentFixtures extends BaseFixtures implements DependentFixtureInterface
             ;
         });
 
-        $this->createMany(Comment::class, 1000, function (Comment $answer) {
+        $this->createMany(Comment::class, 1000, function (Comment $replay) {
             /** @var Comment $comment */
             $comment = $this->getRandomReference(Comment::class);
 
-            $answer
+            $replay
                 ->setCreatedAt($this->faker->dateTimeBetween('-30 days', '-1 day'))
                 ->setAuthor($this->getRandomReference(User::class))
-                ->setAnswerTo($comment)
+                ->setReplayTo($comment)
                 ->setPost($comment->getPost())
                 ->setBody($this->faker->paragraph)
             ;

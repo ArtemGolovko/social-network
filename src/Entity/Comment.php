@@ -34,14 +34,14 @@ class Comment
     private $body;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Comment::class, inversedBy="answers")
+     * @ORM\ManyToOne(targetEntity=Comment::class, inversedBy="replays")
      */
-    private $answerTo;
+    private $replayTo;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="answerTo")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="replayTo")
      */
-    private $answers;
+    private $replays;
 
     /**
      * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="comments")
@@ -51,7 +51,7 @@ class Comment
 
     public function __construct()
     {
-        $this->answers = new ArrayCollection();
+        $this->replays = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,14 +83,14 @@ class Comment
         return $this;
     }
 
-    public function getAnswerTo(): ?self
+    public function getReplayTo(): ?self
     {
-        return $this->answerTo;
+        return $this->replayTo;
     }
 
-    public function setAnswerTo(?self $answerTo): self
+    public function setReplayTo(?self $replayTo): self
     {
-        $this->answerTo = $answerTo;
+        $this->replayTo = $replayTo;
 
         return $this;
     }
@@ -98,27 +98,27 @@ class Comment
     /**
      * @return Collection|self[]
      */
-    public function getAnswers(): Collection
+    public function getReplays(): Collection
     {
-        return $this->answers;
+        return $this->replays;
     }
 
-    public function addAnswer(self $answer): self
+    public function addReplay(self $replay): self
     {
-        if (!$this->answers->contains($answer)) {
-            $this->answers[] = $answer;
-            $answer->setAnswerTo($this);
+        if (!$this->replays->contains($replay)) {
+            $this->replays[] = $replay;
+            $replay->setReplayTo($this);
         }
 
         return $this;
     }
 
-    public function removeAnswer(self $answer): self
+    public function removeReplay(self $replay): self
     {
-        if ($this->answers->removeElement($answer)) {
+        if ($this->replays->removeElement($replay)) {
             // set the owning side to null (unless already changed)
-            if ($answer->getAnswerTo() === $this) {
-                $answer->setAnswerTo(null);
+            if ($replay->getReplayTo() === $this) {
+                $replay->setReplayTo(null);
             }
         }
 

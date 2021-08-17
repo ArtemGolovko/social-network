@@ -27,13 +27,13 @@ class CommentRepository extends ServiceEntityRepository
     public function findLatestByPostWithPagination(Post $post, int $maxResult, int $startIndex = 0)
     {
         $query = $this->createQueryBuilder('c')
-            ->leftJoin('c.answers', 'a')
+            ->leftJoin('c.replays', 'a')
             ->addSelect('a')
             ->innerJoin('c.author', 'u')
             ->addSelect('u')
             ->andWhere('c.post = :post')
             ->setParameter('post', $post)
-            ->andWhere('c.answerTo IS NULL')
+            ->andWhere('c.replayTo IS NULL')
             ->orderBy('c.createdAt', 'DESC')
             ->setFirstResult($startIndex)
             ->setMaxResults($maxResult)
@@ -48,7 +48,7 @@ class CommentRepository extends ServiceEntityRepository
             ->select('count(c)')
             ->andWhere('c.post = :post')
             ->setParameter('post', $post)
-            ->andWhere('c.answerTo IS NULL')
+            ->andWhere('c.replayTo IS NULL')
             ->getQuery()
             ->getSingleScalarResult() > $totalLoaded;
     }
@@ -56,14 +56,14 @@ class CommentRepository extends ServiceEntityRepository
     /**
      * @return Comment[] Returns an array of Comment objects
      */
-    public function findLatestAnswersWithPagination(Comment $comment, int $maxResult, int $startIndex = 0)
+    public function findLatestReplaysWithPagination(Comment $comment, int $maxResult, int $startIndex = 0)
     {
         $query = $this->createQueryBuilder('c')
-            ->andWhere('c.answerTo = :comment')
+            ->andWhere('c.replayTo = :comment')
             ->setParameter('comment', $comment)
             ->innerJoin('c.author', 'u')
             ->addSelect('u')
-            ->leftJoin('c.answers', 'a')
+            ->leftJoin('c.replays', 'a')
             ->addSelect('a')
             ->orderBy('c.createdAt', 'DESC')
             ->setFirstResult($startIndex)
@@ -73,11 +73,11 @@ class CommentRepository extends ServiceEntityRepository
         return new Paginator($query);
     }
 
-    public function isMoreAnswersAvailable(Comment $comment, int $totalLoaded): bool
+    public function isMoreReplaysAvailable(Comment $comment, int $totalLoaded): bool
     {
         return $this->createQueryBuilder('c')
                 ->select('count(c)')
-                ->andWhere('c.answerTo = :comment')
+                ->andWhere('c.replayTo = :comment')
                 ->setParameter('comment', $comment)
                 ->getQuery()
                 ->getSingleScalarResult() > $totalLoaded;

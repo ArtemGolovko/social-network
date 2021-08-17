@@ -44,7 +44,7 @@ class CommentsController extends AbstractController
         foreach ($comments as $comment) {
             $html .= $this->renderView('partial/render_comment.html.twig', [
                 'comment' => $comment,
-                'hasAnswers' => !$comment->getAnswers()->isEmpty()
+                'hasReplays' => !$comment->getReplays()->isEmpty()
             ]);
         }
 
@@ -59,29 +59,29 @@ class CommentsController extends AbstractController
     }
 
     /**
-     * @Route("/comments/{id}/answers", name="app_comment_answers")
+     * @Route("/comments/{id}/replays", name="app_comment_replays")
      */
-    public function answers(Comment $comment, Request $request)
+    public function replays(Comment $comment, Request $request)
     {
         $data = json_decode($request->getContent(), true);
 
-        $answers = $this->commentRepository->findLatestAnswersWithPagination($comment, $data['maxResult'], $data['startIndex']);
+        $replays = $this->commentRepository->findLatestReplaysWithPagination($comment, $data['maxResult'], $data['startIndex']);
 
-        $isMoreAvailable = $this->commentRepository->isMoreAnswersAvailable($comment, $data['startIndex'] + $data['maxResult']);
+        $isMoreAvailable = $this->commentRepository->isMoreReplaysAvailable($comment, $data['startIndex'] + $data['maxResult']);
 
         $html = '';
 
-        foreach ($answers as $answer) {
-            $html .= $this->renderView('partial/render_answer.html.twig', [
-                'answer' => $answer,
-                'hasAnswers' => !$answer->getAnswers()->isEmpty()
+        foreach ($replays as $replay) {
+            $html .= $this->renderView('partial/render_replay.html.twig', [
+                'replay' => $replay,
+                'hasReplays' => !$replay->getReplays()->isEmpty()
             ]);
         }
 
         if ($isMoreAvailable) {
-            $html .= $this->renderView('partial/view_more_answers_button.html.twig', [
+            $html .= $this->renderView('partial/view_more_replays_button.html.twig', [
                 'totalLoaded' => $data['startIndex'] + $data['maxResult'],
-                'answersUrl' => $request->getRequestUri()
+                'replaysUrl' => $request->getRequestUri()
             ]);
         }
         return new Response($html);
@@ -115,16 +115,16 @@ class CommentsController extends AbstractController
         return $this->json([
             'html' => $this->renderView('partial/render_comment.html.twig', [
                 'comment' => $comment,
-                'hasAnswers' => false
+                'hasReplays' => false
             ])
         ]);
     }
 
     /**
-     * @Route("/comments/{id}/answers/create", name="app_comments_answers_create", methods={"POST"})
+     * @Route("/comments/{id}/replays/create", name="app_comments_replays_create", methods={"POST"})
      * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
      */
-    public function createAnswer(Comment $comment, Request $request): Response
+    public function createReplay(Comment $comment, Request $request): Response
     {
         $data = json_decode($request->getContent(), true);
 
@@ -134,22 +134,22 @@ class CommentsController extends AbstractController
             throw new InvalidCsrfTokenException();
         }
 
-        $answer = (new Comment())
+        $replay = (new Comment())
             ->setAuthor($this->getUser())
             ->setBody($data['commentBody'])
             ->setPost($comment->getPost())
-            ->setAnswerTo($comment)
+            ->setReplayTo($comment)
         ;
 
         $em = $this->getDoctrine()->getManager();
 
-        $em->persist($answer);
+        $em->persist($replay);
         $em->flush();
 
         return $this->json([
-            'html' => $this->renderView('partial/render_answer.html.twig', [
-                'answer' => $answer,
-                'hasAnswers' => false
+            'html' => $this->renderView('partial/render_replay.html.twig', [
+                'replay' => $replay,
+                'hasReplays' => false
             ])
         ]);
     }
@@ -168,13 +168,13 @@ class CommentsController extends AbstractController
     }
 
     /**
-     * @Route("/commnts/{id}/make-answers-block", name="app_comment_make_answer_block", methods={"POST"})
+     * @Route("/commnts/{id}/make-replays-block", name="app_comment_make_replay_block", methods={"POST"})
      * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
      */
-    public function loadMakeAnswerBlock($id, UrlGeneratorInterface $urlGenerator): Response
+    public function loadMakeReplayBlock($id, UrlGeneratorInterface $urlGenerator): Response
     {
-        return $this->render('partial/make_answer_block.html.twig', [
-            'createAnswerUrl' => $urlGenerator->generate('app_comments_answers_create', ['id' => $id])
+        return $this->render('partial/make_replay_block.html.twig', [
+            'createReplayUrl' => $urlGenerator->generate('app_comments_replays_create', ['id' => $id])
         ]);
     }
 }

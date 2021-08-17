@@ -86,7 +86,7 @@ $(document).ready(function(){
     $(document).on('click', '.postMoreReply', function (event) {
         let $this = $(this);
 
-        let url = $(this).data('answersUrl');
+        let url = $(this).data('replaysUrl');
         let totalLoaded = $(this).data('totalLoaded');
 
         $.ajax({
@@ -145,10 +145,10 @@ $(document).ready(function(){
     $(document).on('click', '.makeReplyBlock .publishButtonComment', function (event) {
         let csrf_token = $(this).data('_csrf_token');
         let input = $(this).parent().children('input');
-        let commentAnswers = $(this).parents().eq(2).children('.postCommentContent');
+        let commentReplays = $(this).parents().eq(2).children('.postCommentContent');
 
         $.ajax({
-            url: $(this).data('createAnswerUrl'),
+            url: $(this).data('createReplayUrl'),
             type: 'POST',
             dataType: 'json',
             contentType: 'application/json;charset=utf-8',
@@ -158,11 +158,11 @@ $(document).ready(function(){
             })
         }).done(function (data) {
             input.val('');
-            commentAnswers.after(data.html);
+            commentReplays.after(data.html);
         });
     });
     $(document).on('click', '.postCommentReplyButton', function (event) {
-        $(this).parent().append(loadHtml($(this).data('load-make-answer-block-url')));
+        $(this).parent().append(loadHtml($(this).data('load-make-replay-block-url')));
         $(this).remove();
     });
     $(document).on('click', '.btn_share', function (event) {
