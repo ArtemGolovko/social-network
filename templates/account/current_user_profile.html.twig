@@ -21,14 +21,11 @@
         </div>
         <div class="profileDesc">profileDesc</div>
         <div class="profileStats">
-            <span class="stat">{{ 'num_of_subscribers'|trans({subscribers: 0}) }}</span>
+            <span class="stat">{{ 'num_of_subscribers'|trans({subscribers: app.user.subscribers|length}) }}</span>
             <span class="stat">{{ 'num_of_posts'|trans({posts: app.user.posts|length}) }}</span>
-            <span class="stat">{{ 'num_of_subscribed'|trans({subscribed: 0}) }}</span>
+            <span class="stat">{{ 'num_of_subscribed'|trans({subscribed: app.user.subscribed|length}) }}</span>
         </div>
     </div>
 </div>
 {{ include('partial/make_post_block.html.twig') }}
-{#{% for post in app.user.posts %}#}
-{#    {% include 'partial/render_post.html.twig' with {'post': post} %}#}
-{#{% endfor %}#}
 {% endblock %}

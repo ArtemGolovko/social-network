@@ -57,10 +57,22 @@ class User implements UserInterface
      */
     private $postsLiked;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="subscribed")
+     */
+    private $subscribers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="subscribers")
+     */
+    private $subscribed;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->postsLiked = new ArrayCollection();
+        $this->subscribers = new ArrayCollection();
+        $this->subscribed = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -223,5 +235,56 @@ class User implements UserInterface
     public function getAvatarUrl(): string
     {
         return 'img/user.png';
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getSubscribers(): Collection
+    {
+        return $this->subscribers;
+    }
+
+    public function addSubscriber(self $subscriber): self
+    {
+        if (!$this->subscribers->contains($subscriber)) {
+            $this->subscribers[] = $subscriber;
+        }
+
+        return $this;
+    }
+
+    public function removeSubscriber(self $subscriber): self
+    {
+        $this->subscribers->removeElement($subscriber);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getSubscribed(): Collection
+    {
+        return $this->subscribed;
+    }
+
+    public function addSubscribed(self $subscribed): self
+    {
+        if (!$this->subscribed->contains($subscribed)) {
+            $this->subscribed[] = $subscribed;
+            $subscribed->addSubscriber($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubscribed(self $subscribed): self
+    {
+        if ($this->subscribed->removeElement($subscribed)) {
+            $subscribed->removeSubscriber($this);
+        }
+
+        return $this;
     }
 }
