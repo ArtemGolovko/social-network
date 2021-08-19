@@ -9,12 +9,10 @@
     <div class="postCommentContent">
         <p>{{  comment.body }}</p>
     </div>
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
     <button
         class="postCommentReplyButton"
         data-load-make-replay-block-url="{{ path('app_comment_make_replay_block', { 'id': comment.id }) }}"
     >{{ 'Ответить'|trans }}</button>
-    {% endif %}
     {% if hasReplays %}
         {% include 'partial/view_more_replays_button.html.twig' with { 'totalLoaded': 0, 'replaysUrl': path('app_comment_replays', { 'id': comment.id }) } %}
     {% endif %}

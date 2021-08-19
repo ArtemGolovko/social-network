@@ -12,7 +12,14 @@
         <div class="profileIcon" style="background-image: url({{ asset(user.avatarUrl) }}); background-size: cover;"></div>
         <div class="profileButtons">
             <button class="message"><i class="fas fa-comments"></i></button>
-            <button class="subscribeProfile"><span id="subscribeLabel">{{ 'ПОДПИСАТСЯ'|trans }}</span></button>
+            <button
+                class="subscribeProfile"
+                data-action="{% if user in app.user.subscribed %}unsubscribe{% else %}subscribe{% endif %}"
+                data-subscribe-url="{{ path('app_user_subscribe', { 'id': user.id}) }}"
+                data-unsubscribe-url="{{ path('app_user_unsubscribe', { 'id': user.id }) }}"
+                data-subscribe-message="{{ 'ПОДПИСАТСЯ'|trans }}"
+                data-unsubscribe-message="{{ 'ОТПИСАТЬСЯ'|trans }}"
+            ><span id="subscribeLabel">{% if user in app.user.subscribed %}{{ 'ОТПИСАТЬСЯ'|trans }}{% else %}{{ 'ПОДПИСАТСЯ'|trans }}{% endif %}</span></button>
         </div>
     </div>
     <div class="profileInfo">
@@ -22,9 +29,9 @@
         </div>
         <div class="profileDesc">profileDesc</div>
         <div class="profileStats">
-            <span class="stat">{{ 'num_of_subscribers'|trans({subscribers: user.subscribers|length}) }}</span>
-            <span class="stat">{{ 'num_of_posts'|trans({posts: user.posts|length}) }}</span>
-            <span class="stat">{{ 'num_of_subscribed'|trans({subscribed: user.subscribed|length}) }}</span>
+            <span class="stat">{{ 'num_of_subscribers'|trans({ subscribers: user.subscribers|length }) }}</span>
+            <span class="stat">{{ 'num_of_posts'|trans({ posts: user.posts|length }) }}</span>
+            <span class="stat">{{ 'num_of_subscribed'|trans({ subscribed: user.subscribed|length }) }}</span>
         </div>
     </div>
 </div>

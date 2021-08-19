@@ -7,10 +7,5 @@
 {% endblock %}
 
 {% block content %}
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        {{ include('partial/make_post_block.html.twig') }}
-    {% endif %}
-{#    {% for post in posts %}#}
-{#        {% include 'partial/render_post.html.twig' with {'post': post} %}#}
-{#    {% endfor %}#}
+    {{ include('partial/make_post_block.html.twig') }}
 {% endblock %}

@@ -24,8 +24,6 @@ $(document).ready(function(){
             $this.children('.fa-heart').toggleClass("active");
             $this.toggleClass("active");
             $this.children('.fa-heart').toggleClass("animate__bounceIn animate__flip animate__bounce");
-        }).fail(function (data) {
-            window.location.href = data.responseJSON.redirectUrl;
         });
     });
 
@@ -182,15 +180,16 @@ $(document).ready(function(){
     });
 
     $('.subscribeProfile').click(function(event){
-        $('.subscribeProfile').toggleClass("active");
-        var change = document.getElementById("subscribeLabel");
-        if (change.innerHTML == "ПОДПИСКИ")
-        {
-            change.innerHTML = "ПОДПИСАТСЯ";
-        }
-        else {
-            change.innerHTML = "ПОДПИСКИ";
-        }
+
+        $.ajax({
+            url: $(this).data(this.dataset.action + 'Url'),
+            type: 'POST',
+        }).done(() => {
+            $('.subscribeProfile').toggleClass("active");
+            let change = document.getElementById("subscribeLabel");
+            change.innerHTML = $(this).data(this.dataset.action + 'Message');
+            this.dataset.action =  (this.dataset.action === 'subscribe') ? 'unsubscribe' : 'subscribe';
+        });
     });
 });
 

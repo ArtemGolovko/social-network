@@ -1,9 +1,11 @@
 controllers:
     resource: ../../src/Controller/
     type: annotation
-    prefix: /{_locale}
-    requirements:
-        _locale: '%app.locales%'
+    prefix:
+        ru: '/ru'
+        uk: '/uk'
+        en: '/en'
+        '*': ''
     defaults:
         _locale: '%default_locale%'
 

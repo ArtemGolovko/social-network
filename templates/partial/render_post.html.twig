@@ -42,8 +42,5 @@
         <div class="postShare"><button class="btn_share" data-url="{{ path('app_post_url', { 'id': post.id }) }}"><i class="fas fa-share"></i></button> <span>0</span></div>
     </div>
     <div class="postComments">
-{#        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}#}
-{#            {% include 'partial/make_comment_block.html.twig' with { 'createCommentUrl': path('app_post_comments_create', { 'id': post.id }) } %}#}
-{#        {% endif %}#}
     </div>
 </div>

@@ -45,7 +45,6 @@
                 </div>
             </div>
             <div class="header_right">
-                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 <div class="userIcon">
                     <span>{{ app.user.username }} <i class="fas fa-check-circle verifyIcon"></i></span>
                     <div class="headerIcon" style="background-image: url({{ asset(app.user.avatarUrl) }}); background-size: cover;"></div>
@@ -54,10 +53,6 @@
                     <a href="{{ path('app_current_user_profile') }}"><i class="fas fa-user"></i> {{ 'Мой профиль'|trans }}</a>
                     <a href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> {{ 'Выйти из аккаунта'|trans }}</a>
                 </div>
-                {% else %}
-                    <a href="{{ path('app_login') }}"><button class="loginBtnHeader">{{ 'Войти'|trans }}</button></a>
-{#                    <a href="{{ path('app_register') }}"><button class="loginBtnHeader">Войти</button></a>#}
-                {% endif %}
             </div>
         </div>
     </div>

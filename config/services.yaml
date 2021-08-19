@@ -5,9 +5,9 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     domain: '%env(DOMAIN)%'
-    app.locales: en|uk|ru|
+#    app.locales: en|uk|ru|
     default_locale: 'ru'
-
+    access_control_prefix: '^(/en|uk|ru)?'
 services:
     # default configuration for services in *this* file
     _defaults:

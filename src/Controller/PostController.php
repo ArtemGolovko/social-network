@@ -6,7 +6,6 @@ use App\Entity\Post;
 use App\Entity\User;
 use App\Repository\PostRepository;
 use Doctrine\Common\Collections\Criteria;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -77,7 +76,6 @@ class PostController extends AbstractController
 
     /**
      * @Route("/posts/create", name="app_post_create", methods={"POST"})
-     * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
      */
     public function create(Request $request, CsrfTokenManagerInterface $csrfTokenManager)
     {

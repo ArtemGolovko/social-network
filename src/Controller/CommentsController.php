@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Post;
 use App\Repository\CommentRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -89,7 +88,6 @@ class CommentsController extends AbstractController
 
     /**
      * @Route("/posts/{id}/comments/create", name="app_post_comments_create", methods={"POST"})
-     * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
      */
     public function createComment(Post $post, Request $request): Response
     {
@@ -122,7 +120,6 @@ class CommentsController extends AbstractController
 
     /**
      * @Route("/comments/{id}/replays/create", name="app_comments_replays_create", methods={"POST"})
-     * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
      */
     public function createReplay(Comment $comment, Request $request): Response
     {
@@ -159,9 +156,6 @@ class CommentsController extends AbstractController
      */
     public function loadMakeCommentBlock($id, UrlGeneratorInterface $urlGenerator): Response
     {
-        if (!$this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return new Response('');
-        }
         return $this->render('partial/make_comment_block.html.twig', [
             'createCommentUrl' => $urlGenerator->generate('app_post_comments_create', ['id' => $id])
         ]);
@@ -169,7 +163,6 @@ class CommentsController extends AbstractController
 
     /**
      * @Route("/commnts/{id}/make-replays-block", name="app_comment_make_replay_block", methods={"POST"})
-     * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
      */
     public function loadMakeReplayBlock($id, UrlGeneratorInterface $urlGenerator): Response
     {

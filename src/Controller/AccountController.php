@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\PostRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +13,6 @@ class AccountController extends AbstractController
 {
     /**
      * @Route("/profile", name="app_current_user_profile", host="%domain%")
-     * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
      */
     public function currentUserProfile(): Response
     {
@@ -23,7 +21,6 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/profile", name="app_mobile_current_user_profile", host="m.%domain%")
-     * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
      */
     public function mobileCurrentUserProfile(): Response
     {
@@ -59,7 +56,7 @@ class AccountController extends AbstractController
     /**
      * @Route("/user/{id}/posts", name="app_user_post", methods={"POST"})
      */
-    public function UserPosts(User $user, Request $request, PostRepository $postRepository): Response
+    public function userPosts(User $user, Request $request, PostRepository $postRepository): Response
     {
         $data = json_decode($request->getContent(), true);
 
@@ -74,5 +71,41 @@ class AccountController extends AbstractController
         }
 
         return $this->json($renderedPosts);
+    }
+
+    /**
+     * @Route("/user/{id}/subscribe", name="app_user_subscribe", methods={"POST"})
+     */
+    public function subscribe(User $user): Response
+    {
+        if ($user == $this->getUser()) {
+            return $this->json([
+                'message' => 'You can\'t subscribe to yourself'
+            ], 409);
+        }
+        $user->addSubscriber($this->getUser());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->json([]);
+    }
+
+    /**
+     * @Route("/user/{id}/unsubscribe", name="app_user_unsubscribe", methods={"POST"})
+     */
+    public function unsubscribe(User $user): Response
+    {
+        if ($user == $this->getUser()) {
+            return $this->json([
+                'message' => 'You can\'t unsubscribe from yourself'
+            ], 409);
+        }
+        $user->removeSubscriber($this->getUser());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->json([]);
     }
 }
