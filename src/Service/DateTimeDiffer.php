@@ -14,7 +14,7 @@ class DateTimeDiffer implements DateTimeDifferInterface
     {
         $this->locale = $requestStack->getCurrentRequest() ? $requestStack->getCurrentRequest()->getLocale() : 'ru';
         $locales = (array)$container->getParameter('locales');
-        $this->locale = (in_array($this->locale, $locales)) ?: 'ru';
+        $this->locale = (in_array($this->locale, $locales)) ? $this->locale : 'ru';
     }
 
     public function getDiff($dateTime): string
