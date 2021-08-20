@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Post;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
@@ -51,6 +52,25 @@ class PostRepository extends ServiceEntityRepository
             ->orderBy('p.createdAt', 'DESC')
             ->andWhere('p.author = :user')
             ->setParameter('user', $user)
+            ->setFirstResult($firstResult)
+            ->setMaxResults($maxResults)
+        ;
+
+        return new Paginator($query);
+    }
+
+    public function findByUserSubscribedWithPagination(int $firstResult, int $maxResults, User $user)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->leftJoin('p.author', 'a')
+            ->addSelect('a')
+            ->leftJoin('p.likes', 'l')
+            ->addSelect('l')
+            ->leftJoin('p.comments', 'c')
+            ->addSelect('c')
+            ->andWhere(':user MEMBER OF a.subscribers')
+            ->setParameter('user', $user)
+            ->orderBy('p.createdAt', 'DESC')
             ->setFirstResult($firstResult)
             ->setMaxResults($maxResults)
         ;

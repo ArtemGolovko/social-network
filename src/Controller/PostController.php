@@ -107,11 +107,20 @@ class PostController extends AbstractController
      */
     public function posts(Request $request, PostRepository $postRepository)
     {
+        /** @var User $user */
+        $user = (object)$this->getUser();
+
         $data = json_decode($request->getContent(), true);
 
         $renderedPosts = [];
 
-        $posts = $postRepository->findLatestPublishedWithPagination($data['startIndex'], $data['maxResult']);
+        $posts = [];
+
+        if ($user->getSubscribed()->isEmpty()) {
+            $posts = $postRepository->findLatestPublishedWithPagination($data['startIndex'], $data['maxResult']);
+        } else {
+            $posts = $postRepository->findByUserSubscribedWithPagination($data['startIndex'], $data['maxResult'], $user);
+        }
 
         foreach ($posts as $post) {
             $renderedPosts[] = $this->renderView('partial/render_post.html.twig', [

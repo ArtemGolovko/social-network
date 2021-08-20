@@ -186,9 +186,9 @@ $(document).ready(function(){
             type: 'POST',
         }).done(() => {
             $('.subscribeProfile').toggleClass("active");
-            let change = document.getElementById("subscribeLabel");
-            change.innerHTML = $(this).data(this.dataset.action + 'Message');
             this.dataset.action =  (this.dataset.action === 'subscribe') ? 'unsubscribe' : 'subscribe';
+            let change = document.getElementById("subscribeLabel");
+            change.innerText = $(this).data(this.dataset.action + 'Message');
         });
     });
 });

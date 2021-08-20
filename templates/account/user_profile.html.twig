@@ -13,7 +13,7 @@
         <div class="profileButtons">
             <button class="message"><i class="fas fa-comments"></i></button>
             <button
-                class="subscribeProfile"
+                class="subscribeProfile {% if user in app.user.subscribed %}active{% endif %}"
                 data-action="{% if user in app.user.subscribed %}unsubscribe{% else %}subscribe{% endif %}"
                 data-subscribe-url="{{ path('app_user_subscribe', { 'id': user.id}) }}"
                 data-unsubscribe-url="{{ path('app_user_unsubscribe', { 'id': user.id }) }}"
