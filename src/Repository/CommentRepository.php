@@ -21,9 +21,9 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
-     /**
-      * @return Comment[] Returns an array of Comment objects
-      */
+    /**
+     * @return Comment[] Returns an array of Comment objects
+     */
     public function findLatestByPostWithPagination(Post $post, int $maxResult, int $startIndex = 0)
     {
         $query = $this->createQueryBuilder('c')

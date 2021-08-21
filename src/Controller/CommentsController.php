@@ -22,7 +22,8 @@ class CommentsController extends AbstractController
     /**
      * CommentsController constructor.
      */
-    public function __construct(CommentRepository $commentRepository, CsrfTokenManagerInterface $csrfTokenManager) {
+    public function __construct(CommentRepository $commentRepository, CsrfTokenManagerInterface $csrfTokenManager)
+    {
         $this->commentRepository = $commentRepository;
         $this->csrfTokenManager = $csrfTokenManager;
     }

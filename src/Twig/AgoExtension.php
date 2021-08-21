@@ -8,8 +8,6 @@ use Twig\TwigFilter;
 
 class AgoExtension extends AbstractExtension
 {
-
-
     private DateTimeDifferInterface $dateTimeDiffer;
 
     public function __construct(DateTimeDifferInterface $dateTimeDiffer)

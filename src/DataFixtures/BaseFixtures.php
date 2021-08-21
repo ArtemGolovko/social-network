@@ -40,8 +40,7 @@ abstract class BaseFixtures extends Fixture
 
     protected function createMany(string $className, int $count, callable $factory, bool $addReference = true)
     {
-        for ($i = 0; $i < $count; ++$i)
-        {
+        for ($i = 0; $i < $count; ++$i) {
             $entity = $this->create($className, $factory);
 
             if ($addReference) {
@@ -68,5 +67,4 @@ abstract class BaseFixtures extends Fixture
 
         return $this->getReference($this->faker->randomElement($this->referencesIndex[$className]));
     }
-
 }

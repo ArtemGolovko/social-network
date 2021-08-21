@@ -130,5 +130,4 @@ class PostController extends AbstractController
 
         return $this->json($renderedPosts);
     }
-
 }

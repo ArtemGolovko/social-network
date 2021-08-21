@@ -22,7 +22,7 @@ class UserFixtures extends BaseFixtures
     public function loadData(ObjectManager $manager)
     {
         $this->createMany(User::class, 10, function (User $user) {
-             $user
+            $user
                  ->setUsername($this->faker->userName)
                  ->setEmail($this->faker->email)
                  ->setName($this->faker->name)

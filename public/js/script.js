@@ -10,20 +10,17 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '.btn_like',function(event){
-        let $this = $(this);
-        let $$this = this;
-
         $.ajax({
             url: this.dataset[`${this.dataset.action}Url`],
             type: 'POST',
             dataType: 'json'
-        }).done(function(data) {
-            $this.parent().children('#likesCount').text(data.likesCount);
-            $$this.dataset.action =  ($$this.dataset.action === 'like') ? 'dislike' : 'like';
+        }).done(data => {
+            $(this).parent().children('#likesCount').text(data.likesCount);
+            this.dataset.action =  (this.dataset.action === 'like') ? 'dislike' : 'like';
 
-            $this.children('.fa-heart').toggleClass("active");
-            $this.toggleClass("active");
-            $this.children('.fa-heart').toggleClass("animate__bounceIn animate__flip animate__bounce");
+            $(this).children('.fa-heart').toggleClass("active");
+            $(this).toggleClass("active");
+            $(this).children('.fa-heart').toggleClass("animate__bounceIn animate__flip animate__bounce");
         });
     });
 
@@ -35,7 +32,6 @@ $(document).ready(function(){
     });
     $(document).on('click', '.btn_comment', function(event){
         let postComments = $(this).parents().eq(2).children('.postComments');
-        let $this = $(this);
 
         let url = $(this).data('comments-url');
         let loadMakeCommentBlockUrl = $(this).data('loadMakeCommentBlockUrl');
@@ -50,17 +46,15 @@ $(document).ready(function(){
                     startIndex: 0,
                     maxResult: 2
                 })
-            }).done(function (data) {
+            }).done(data => {
                 postComments.prepend(data);
                 postComments.append(loadHtml(loadMakeCommentBlockUrl));
-                $this.attr('data-loaded', true);
+                $(this).attr('data-loaded', true);
             });
         }
         postComments.toggleClass("active");
     });
     $(document).on('click', '.postMoreCemmentsBtn', function (event) {
-        let $this = $(this);
-
         let url = $(this).data('commentsUrl');
         let totalLoaded = $(this).data('totalLoaded');
 
@@ -73,17 +67,15 @@ $(document).ready(function(){
                 startIndex: totalLoaded,
                 maxResult: 2
             })
-        }).done(function (data) {
+        }).done(data => {
 
-            $this.after(data);
+            $(this).after(data);
 
-            $this.remove();
+            $(this).remove();
         });
     });
 
     $(document).on('click', '.postMoreReply', function (event) {
-        let $this = $(this);
-
         let url = $(this).data('replaysUrl');
         let totalLoaded = $(this).data('totalLoaded');
 
@@ -96,9 +88,9 @@ $(document).ready(function(){
                 startIndex: totalLoaded,
                 maxResult: 2
             })
-        }).done(function (data) {
-            $this.after(data);
-            $this.remove();
+        }).done(data => {
+            $(this).after(data);
+            $(this).remove();
         });
     });
 
@@ -116,7 +108,7 @@ $(document).ready(function(){
                 '_csrf_token': csrfToken,
                 'postBody': postBody
             })
-        }).done(function (data) {
+        }).done(data => {
             parent.children('.mkpLeft').children('.mkpInput').val('');
             parent.after(data.html);
         });
@@ -135,7 +127,7 @@ $(document).ready(function(){
                 '_csrf_token': csrf_token,
                 'commentBody': input.val()
             })
-        }).done(function (data) {
+        }).done(data => {
             input.val('');
             postComments.prepend(data.html);
         });
@@ -154,7 +146,7 @@ $(document).ready(function(){
                 '_csrf_token': csrf_token,
                 'commentBody': input.val()
             })
-        }).done(function (data) {
+        }).done(data => {
             input.val('');
             commentReplays.after(data.html);
         });
@@ -169,7 +161,7 @@ $(document).ready(function(){
              url: url,
              type: 'POST',
              dataType: 'json'
-         }).done(function (data) {
+         }).done(data => {
              window.location.href = data.url;
          });
     });
@@ -201,7 +193,7 @@ function loadHtml(url)
         type: 'POST',
         async: false,
         dataType: 'html'
-    }).done(function (data) {
+    }).done(data => {
         html = data;
     });
 

@@ -108,6 +108,4 @@ class LoginFromAuthenticator extends AbstractFormLoginAuthenticator
             ?? $this->urlGenerator->generate('app_homepage')
         );
     }
-
-
 }

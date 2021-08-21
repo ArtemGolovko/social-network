@@ -9,7 +9,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PostLikeController extends AbstractController
 {
-
     /**
      * @Route("/posts/{id}/like", name="app_post_like", methods={"POST"})
      */
