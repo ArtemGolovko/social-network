@@ -1,3 +1,11 @@
+import '../css/app.css';
+
+import $ from 'jquery';
+
+$("window").on('load', function() {
+    $("body").removeAttr("id");
+});
+
 $(document).ready(function(){
     let homepageLabel = $('#homepage');
     if (homepageLabel.children('a').attr('href') === window.location.pathname) {
@@ -156,14 +164,14 @@ $(document).ready(function(){
         $(this).remove();
     });
     $(document).on('click', '.btn_share', function (event) {
-         let url = $(this).data('url');
-         $.ajax({
-             url: url,
-             type: 'POST',
-             dataType: 'json'
-         }).done(data => {
-             window.location.href = data.url;
-         });
+        let url = $(this).data('url');
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json'
+        }).done(data => {
+            window.location.href = data.url;
+        });
     });
 
     $('.mkpInput').click(function(event){

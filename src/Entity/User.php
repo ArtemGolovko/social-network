@@ -234,7 +234,7 @@ class User implements UserInterface
 
     public function getAvatarUrl(): string
     {
-        return 'img/user.png';
+        return 'build/img/user.jpg';
     }
 
     /**

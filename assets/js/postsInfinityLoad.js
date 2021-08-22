@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 $(document).ready(function () {
     const mainContent = $('.mainContent');
     const loadPostUrl = mainContent.data('loadPostsUrl');

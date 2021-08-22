@@ -36,3 +36,6 @@ services:
     App\Service\DateTimeDiffer: ~
 
     App\Handler\LogoutHandler: ~
+
+    App\Service\GetLocaleInterface: '@App\Service\GetLocale'
+    App\Service\GetLocale: ~

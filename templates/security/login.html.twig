@@ -3,7 +3,7 @@
 {% block title %}Вход - Митер{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    {{ encore_entry_link_tags('login') }}
 {% endblock %}
 
 {% block body %}
@@ -12,7 +12,7 @@
 {% endif %}
 <form method="post">
     <div class="imgcontainer">
-        <img src="{{ asset('img/logo_header.png') }}" alt="Miter" class="logo">
+        <img src="{{ asset('build/img/logo_header.jpg') }}" alt="Miter" class="logo">
     </div>
 
     <div class="container">

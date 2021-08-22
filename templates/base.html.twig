@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app.request.locale }}">
+<html lang="{{ locale }}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,11 +9,10 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
     <link rel="manifest" href="{{ asset('manifest.json') }}">
     <title>{% block title %}Митер{% endblock %}</title>
+
     {% block stylesheets %}{% endblock %}
 
-    {% block javascripts %}
-    <script src="https://kit.fontawesome.com/4cb89e523d.js" crossorigin="anonymous"></script>
-    {% endblock %}
+    {% block javascripts %}{% endblock %}
 </head>
 <body {% block body_attrs %}{% endblock %}>
 {% block body %}{% endblock %}

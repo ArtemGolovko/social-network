@@ -7,6 +7,9 @@
 /*    backdrop-filter: blur(10px);*/
 /*    background-position: center;*/
 /*}*/
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
+
 body{
     margin: 0;
     width: 100%;

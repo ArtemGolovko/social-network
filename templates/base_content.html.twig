@@ -1,19 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    {{ parent() }}
+    {{ encore_entry_link_tags('app') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="{{ asset('js/script.js') }}"></script>
-    <script>
-        $("window").on('load', function() {
-            $("body").removeAttr("id");
-        });
-    </script>
+    {{ encore_entry_script_tags('app') }}
 {% endblock %}
 
 {% block body_attrs %}id="transition_disabled"{% endblock %}
@@ -24,7 +18,7 @@
         <div class="header_inner">
             <div class="header_left">
                 <div class="logo">
-                    <a href="{{ path('app_homepage') }}"><img src="{{ asset('img/logo_header.png') }}" alt=""></a>
+                    <a href="{{ path('app_homepage') }}"><img src="{{ asset('build/img/logo_header.jpg') }}" alt=""></a>
                 </div>
                 <div class="searchBox">
                     <i class="fas fa-search"></i>
@@ -35,7 +29,7 @@
             <div class="notificationList">
                 <div class="notification">
                     <div class="notificationUser">
-                        <div class="postIcon" style="background-image: url({{ asset('img/user.png') }}); background-size: cover; width: 30px; height: 30px;"></div>
+                        <div class="postIcon" style="background-image: url({{ asset('build/img/user.jpg') }}); background-size: cover; width: 30px; height: 30px;"></div>
                         <div class="postUserInfo">
                             <div class="postUsername" style="font-size: 15px;">notificationUsername</div>
                             <div class="postTime" style="font-size: 12px;">notificationTime</div>

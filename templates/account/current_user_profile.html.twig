@@ -3,7 +3,7 @@
 {% block mainContentAttrs %}data-load-posts-url="{{ path('app_user_post', {'id': app.user.id}) }}"{% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('js/postsInfinityLoad.js') }}"></script>
+    {{ encore_entry_script_tags('postsInfinityLoad') }}
 {% endblock %}
 {% block content %}
 <div class="profileBlock">
