@@ -40,7 +40,7 @@
             </div>
             <div class="header_right">
                 <div class="userIcon">
-                    <span>{{ app.user.username }} <i class="fas fa-check-circle verifyIcon"></i></span>
+                    <span>{{ app.user.username }} {% if app.user.isVerified %}<i class="fas fa-check-circle verifyIcon"></i>{% endif %}</span>
                     <div class="headerIcon" style="background-image: url({{ asset(app.user.avatarUrl) }}); background-size: cover;"></div>
                 </div>
                 <div class="profileMenuHeader">

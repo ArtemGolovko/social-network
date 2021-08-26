@@ -3,8 +3,8 @@
         <div class="postCommentUserIconReply"
              style="background-image: url({{ asset(replay.author.avatarUrl) }}); background-size: cover;"></div>
         <div class="postUserInfo">
-            <div class="postCommentUsername">{{ replay.author.username }} <i class="fas fa-check-circle verifyIcon"
-                                                                              aria-hidden="true"></i></div>
+            <div class="postCommentUsername">{{ replay.author.username }} {% if replay.author.isVerified %}<i class="fas fa-check-circle verifyIcon"
+                                                                              aria-hidden="true"></i>{% endif %}</div>
             <div class="postCommentTime">{{ replay.createdAt|ago }}</div>
         </div>
     </div>

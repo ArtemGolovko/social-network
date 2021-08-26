@@ -2,7 +2,7 @@
     <div class="postCommentUser">
         <div class="postCommentUserIcon" style="background-image: url({{ asset(comment.author.avatarUrl) }}); background-size: cover;"></div>
         <div class="postUserInfo">
-            <div class="postCommentUsername">{{ comment.author.username }} <i class="fas fa-check-circle verifyIcon"></i></div>
+            <div class="postCommentUsername">{{ comment.author.username }} {% if comment.author.isVerified %}<i class="fas fa-check-circle verifyIcon"></i>{% endif %}</div>
             <div class="postCommentTime">{{ comment.createdAt|ago }}</div>
         </div>
     </div>

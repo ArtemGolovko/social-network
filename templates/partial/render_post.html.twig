@@ -4,7 +4,7 @@
             <div class="postUser">
                 <div class="postIcon" style="background-image: url({{ asset(post.author.avatarUrl) }}); background-size: cover;"></div>
                 <div class="postUserInfo">
-                    <div class="postUsername">{{ post.author.username }} <i class="fas fa-check-circle verifyIcon"></i></div>
+                    <div class="postUsername">{{ post.author.username }} {% if post.author.isVerified %}<i class="fas fa-check-circle verifyIcon"></i>{% endif %}</div>
                     <div class="postTime">{{ post.createdAt|ago }}</div>
                 </div>
             </div>

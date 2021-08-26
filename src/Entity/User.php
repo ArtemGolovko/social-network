@@ -67,6 +67,11 @@ class User implements UserInterface
      */
     private $subscribed;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -284,6 +289,18 @@ class User implements UserInterface
         if ($this->subscribed->removeElement($subscribed)) {
             $subscribed->removeSubscriber($this);
         }
+
+        return $this;
+    }
+
+    public function getIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

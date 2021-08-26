@@ -16,7 +16,7 @@
     </div>
     <div class="profileInfo">
         <div class="profileBio">
-            <div class="profileUsername">{{ app.user.name }} <i class="fas fa-check-circle verifyIcon"></i></div>
+            <div class="profileUsername">{{ app.user.name }} {% if app.user.isVerified %}<i class="fas fa-check-circle verifyIcon"></i>{% endif %}</div>
             <div class="profileNickname">@{{ app.user.username }}</div>
         </div>
         <div class="profileDesc">profileDesc</div>
