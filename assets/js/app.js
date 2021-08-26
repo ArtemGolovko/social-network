@@ -44,7 +44,7 @@ $(document).ready(function(){
         let url = $(this).data('comments-url');
         let loadMakeCommentBlockUrl = $(this).data('loadMakeCommentBlockUrl');
 
-        if ($(this).data('loaded') === false) {
+        if (this.dataset.loaded === 'false') {
             $.ajax({
                 url: url,
                 type: 'POST',
