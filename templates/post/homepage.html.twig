@@ -1,0 +1,11 @@
+{% extends 'base_content.html.twig' %}
+
+{% block mainContentAttrs %}data-load-posts-url="{{ path('app_post') }}"{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('postsInfinityLoad') }}
+{% endblock %}
+
+{% block content %}
+    {{ include('partial/make_post_block.html.twig') }}
+{% endblock %}

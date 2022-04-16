@@ -1,0 +1,11 @@
+<div class="makePostBlock">
+    <div class="mkpLeft">
+        <div class="postIconMkp" style="background-image: url({{ asset(app.user.avatarUrl) }}); background-size: cover;"></div>
+        <input class="mkpInput" placeholder="{{ 'Что нового?'|trans }}" type="text">
+    </div>
+    <button
+            class="publishButtonPost"
+            data-create-post-url="{{ path('app_post_create') }}"
+            data-_csrf_token="{{ csrf_token('authenticate') }}"
+    >{{ 'Опубликовать'|trans }}</button>
+</div>

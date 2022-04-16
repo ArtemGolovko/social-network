@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+
+{% block body_attrs %}id="transition_disabled"{% endblock %}
+
+{% block body %}
+<header>
+    <div class="container_header">
+        <div class="header_inner">
+            <div class="header_left">
+                <div class="logo">
+                    <a href="{{ path('app_homepage') }}"><img src="{{ asset('build/img/logo_header.jpg') }}" alt=""></a>
+                </div>
+                <div class="searchBox">
+                    <i class="fas fa-search"></i>
+                    <input class="mainSearch" placeholder="{{ 'Поиск'|trans }}" type="text">
+                </div>
+                <button class="notificationIcon"><i class="fas fa-bell"></i><div class="round"></div></button>
+            </div>
+            <div class="notificationList">
+                <div class="notification">
+                    <div class="notificationUser">
+                        <div class="postIcon" style="background-image: url({{ asset('build/img/user.jpg') }}); background-size: cover; width: 30px; height: 30px;"></div>
+                        <div class="postUserInfo">
+                            <div class="postUsername" style="font-size: 15px;">notificationUsername</div>
+                            <div class="postTime" style="font-size: 12px;">notificationTime</div>
+                        </div>
+                    </div>
+                    <p class="notificationDesc" style="font-size: 12px;">notificationDesc</p>
+                </div>
+            </div>
+            <div class="header_right">
+                <div class="userIcon">
+                    <span>{{ app.user.username }} {% if app.user.isVerified %}<i class="fas fa-check-circle verifyIcon"></i>{% endif %}</span>
+                    <div class="headerIcon" style="background-image: url({{ asset(app.user.avatarUrl) }}); background-size: cover;"></div>
+                </div>
+                <div class="profileMenuHeader">
+                    <a href="{{ path('app_current_user_profile') }}"><i class="fas fa-user"></i> {{ 'Мой профиль'|trans }}</a>
+                    <a href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> {{ 'Выйти из аккаунта'|trans }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="content">
+        <div class="userPanel">
+            <div class="upLabel" id="homepage"><i class="fas fa-home"></i><a href="{{ path('app_homepage') }}">{{ 'Главная'|trans }}</a></div>
+            <div class="upLabel"><i class="fas fa-search"></i><a href="#">{{ 'Поиск'|trans }}</a></div>
+            <div class="upLabel"><i class="fas fa-comments"></i><a href="#">{{ 'Сообщения'|trans }}</a></div>
+            <div class="upLabel"><i class="fas fa-star"></i><a href="#">{{ 'Избранное'|trans }}</a></div>
+            <div class="upLabel"><i class="fas fa-user-plus"></i><a href="#">{{ 'Подписки'|trans }}</a></div>
+            <div class="upLabel"><i class="fas fa-cog"></i><a href="#">{{ 'Настройки'|trans }}</a></div>
+        </div>
+        <div class="mainContent" {% block mainContentAttrs %}{% endblock %}>
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

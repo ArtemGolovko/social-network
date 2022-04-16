@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Вход - Митер{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('login') }}
+{% endblock %}
+
+{% block body %}
+{% if error %}
+    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+<form method="post">
+    <div class="imgcontainer">
+        <img src="{{ asset('build/img/logo_header.jpg') }}" alt="Miter" class="logo">
+    </div>
+
+    <div class="container">
+        <label for="uname"><span class="loginText">{{ 'Никнейм'|trans }}</span></label>
+        <div class="inputField">
+            <i class="fas fa-user"></i><input type="text" value="{{ last_username }}" placeholder="{{ 'Введите никнейм'|trans }}" name="username" required>
+        </div>
+
+        <label for="psw"><span class="loginText">{{ 'Пароль'|trans }}</span></label>
+        <div class="inputField">
+            <i class="fas fa-key"></i><input type="password" placeholder="{{ 'Введите пароль'|trans }}" name="password" required>
+        </div>
+
+        <button type="submit">{{ 'Войти'|trans }}</button>
+        <label>
+            <div class="rememberMe"><input type="checkbox" checked="checked" name="_remember_me"> <span>{{ 'Запомнить меня'|trans }}</span></div>
+        </label>
+        <a href="{{ path('app_register') }}">{{ 'Нет аккаунта? Зарегистрироваться'|trans }}</a>
+    </div>
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+</form>
+{% endblock %}

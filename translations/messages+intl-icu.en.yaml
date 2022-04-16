@@ -1,0 +1,18 @@
+num_of_posts: >-
+  {posts, plural,
+    =0 {on posts}
+    one {one post}
+    other {# posts}
+  }
+num_of_subscribers: >-
+  {subscribers, plural,
+    =0 {no subscribers}
+    one {one subscriber}
+    other {# subscribers}
+  }
+num_of_subscribed: >-
+  {subscribed, plural,
+    =0 {on subscribed}
+    one {one subscribed}
+    other {# subscribed}
+  }

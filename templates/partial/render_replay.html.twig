@@ -1,0 +1,21 @@
+<div class="postCommentReply">
+    <div class="postCommentUser">
+        <div class="postCommentUserIconReply"
+             style="background-image: url({{ asset(replay.author.avatarUrl) }}); background-size: cover;"></div>
+        <div class="postUserInfo">
+            <div class="postCommentUsername">{{ replay.author.username }} {% if replay.author.isVerified %}<i class="fas fa-check-circle verifyIcon"
+                                                                              aria-hidden="true"></i>{% endif %}</div>
+            <div class="postCommentTime">{{ replay.createdAt|ago }}</div>
+        </div>
+    </div>
+    <div class="postCommentContent">
+        <p>{{ replay.body|process }}</p>
+    </div>
+    <button
+        class="postCommentReplyButton"
+        data-load-make-replay-block-url="{{ path('app_comment_make_replay_block', { 'id': replay.id }) }}"
+    >{{ 'Ответить'|trans }}</button>
+    {% if hasReplays %}
+        {% include 'partial/view_more_replays_button.html.twig' with { 'totalLoaded': 0, 'replaysUrl': path('app_comment_replays', { 'id': replay.id }) } %}
+    {% endif %}
+</div>

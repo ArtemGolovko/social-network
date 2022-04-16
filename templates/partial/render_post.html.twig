@@ -1,0 +1,46 @@
+<div class="postBlock">
+    <div class="postHeader">
+        <a href="{{ path('app_user_profile', {'username': post.author.username}) }}">
+            <div class="postUser">
+                <div class="postIcon" style="background-image: url({{ asset(post.author.avatarUrl) }}); background-size: cover;"></div>
+                <div class="postUserInfo">
+                    <div class="postUsername">{{ post.author.username }} {% if post.author.isVerified %}<i class="fas fa-check-circle verifyIcon"></i>{% endif %}</div>
+                    <div class="postTime">{{ post.createdAt|ago }}</div>
+                </div>
+            </div>
+        </a>
+        <div class="postMore">
+            <i class="fas fa-ellipsis-h moreicon"></i>
+            <div class="postMoreMenu">
+                <button><i class="fas fa-star"></i> {{ 'В Избранное'|trans }}</button>
+                <button><i class="fas fa-exclamation-triangle"></i> {{ 'Пожаловаться'|trans }}</button>
+            </div>
+        </div>
+    </div>
+    <div class="postContent">
+        <p>{{ post.body|process }}</p>
+    </div>
+    <div class="postFooter">
+        <div class="postLike">
+            <button
+                    class="btn_like {% if app.user in post.likes %}active{% endif %}"
+                    data-like-url="{{ path('app_post_like', { 'id': post.id }) }}"
+                    data-dislike-url="{{ path('app_post_dislike', { 'id': post.id }) }}"
+                    data-action="{% if app.user in post.likes %}dislike{% else %}like{% endif %}"
+            ><i class="fas fa-heart animate__animated{% if app.user in post.likes %} active animate__bounceIn animate__flip animate__bounce{% endif %}"></i>
+            </button> <span id="likesCount">{{ post.likes|length }}</span>
+        </div>
+        <div class="postCommentIcon">
+            <button
+                    class="btn_comment"
+                    data-comments-url="{{ path('app_post_comments', { 'id': post.id }) }}"
+                    data-loaded="false"
+                    data-load-make-comment-block-url="{{ path('app_post_make_comment_block', { 'id': post.id }) }}"
+            ><i class="fas fa-comment"></i>
+            </button> <span>{{ post.comments|length }}</span>
+        </div>
+        <div class="postShare"><button class="btn_share" data-url="{{ path('app_post_url', { 'id': post.id }) }}"><i class="fas fa-share"></i></button> <span>0</span></div>
+    </div>
+    <div class="postComments">
+    </div>
+</div>

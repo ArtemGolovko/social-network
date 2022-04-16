@@ -1,0 +1,31 @@
+{% extends 'base_content.html.twig' %}
+
+{% block mainContentAttrs %}data-load-posts-url="{{ path('app_user_post', {'id': app.user.id}) }}"{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('postsInfinityLoad') }}
+{% endblock %}
+{% block content %}
+<div class="profileBlock">
+    <div class="profileHeader">
+        <div class="profileBgImage" style="background: #ff6400; background-size: cover;"></div>
+        <div class="profileIcon" style="background-image: url({{ asset(app.user.avatarUrl) }}); background-size: cover;"></div>
+        <div class="profileButtons">
+            <button class="editProfileBtn"><span id="subscribeLabel"><i class="fas fa-pen"></i> {{ 'РЕДАКТИРОВАТЬ'|trans }}</span></button>
+        </div>
+    </div>
+    <div class="profileInfo">
+        <div class="profileBio">
+            <div class="profileUsername">{{ app.user.name }} {% if app.user.isVerified %}<i class="fas fa-check-circle verifyIcon"></i>{% endif %}</div>
+            <div class="profileNickname">@{{ app.user.username }}</div>
+        </div>
+        <div class="profileDesc">profileDesc</div>
+        <div class="profileStats">
+            <span class="stat">{{ 'num_of_subscribers'|trans({subscribers: app.user.subscribers|length}) }}</span>
+            <span class="stat">{{ 'num_of_posts'|trans({posts: app.user.posts|length}) }}</span>
+            <span class="stat">{{ 'num_of_subscribed'|trans({subscribed: app.user.subscribed|length}) }}</span>
+        </div>
+    </div>
+</div>
+{{ include('partial/make_post_block.html.twig') }}
+{% endblock %}

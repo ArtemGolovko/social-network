@@ -1,0 +1,38 @@
+{% extends 'base_content.html.twig' %}
+
+{% block mainContentAttrs %}data-load-posts-url="{{ path('app_user_post', {'id': user.id}) }}"{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('postsInfinityLoad') }}
+{% endblock %}
+{% block content %}
+<div class="profileBlock">
+    <div class="profileHeader">
+        <div class="profileBgImage" style="background: #ff6400; background-size: cover;"></div>
+        <div class="profileIcon" style="background-image: url({{ asset(user.avatarUrl) }}); background-size: cover;"></div>
+        <div class="profileButtons">
+            <button class="message"><i class="fas fa-comments"></i></button>
+            <button
+                class="subscribeProfile {% if user in app.user.subscribed %}active{% endif %}"
+                data-action="{% if user in app.user.subscribed %}unsubscribe{% else %}subscribe{% endif %}"
+                data-subscribe-url="{{ path('app_user_subscribe', { 'id': user.id}) }}"
+                data-unsubscribe-url="{{ path('app_user_unsubscribe', { 'id': user.id }) }}"
+                data-subscribe-message="{{ 'ПОДПИСАТСЯ'|trans }}"
+                data-unsubscribe-message="{{ 'ОТПИСАТЬСЯ'|trans }}"
+            ><span id="subscribeLabel">{% if user in app.user.subscribed %}{{ 'ОТПИСАТЬСЯ'|trans }}{% else %}{{ 'ПОДПИСАТСЯ'|trans }}{% endif %}</span></button>
+        </div>
+    </div>
+    <div class="profileInfo">
+        <div class="profileBio">
+            <div class="profileUsername">{{ user.name }} {% if user.isVerified %}<i class="fas fa-check-circle verifyIcon"></i>{% endif %}</div>
+            <div class="profileNickname">@{{ user.username }}</div>
+        </div>
+        <div class="profileDesc">profileDesc</div>
+        <div class="profileStats">
+            <span class="stat">{{ 'num_of_subscribers'|trans({ subscribers: user.subscribers|length }) }}</span>
+            <span class="stat">{{ 'num_of_posts'|trans({ posts: user.posts|length }) }}</span>
+            <span class="stat">{{ 'num_of_subscribed'|trans({ subscribed: user.subscribed|length }) }}</span>
+        </div>
+    </div>
+</div>
+{% endblock %}
